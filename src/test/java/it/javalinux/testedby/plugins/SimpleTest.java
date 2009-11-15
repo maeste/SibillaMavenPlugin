@@ -18,58 +18,36 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package it.javalinux.testedby.plugins;
 
-import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
-
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+
+import org.apache.maven.plugin.testing.AbstractMojoTestCase;
+import org.junit.Test;
 
 /**
- * Sample goal that touches a timestamp file.
+ * A basic test
  * 
- * @goal testedby
+ * @author alessio.soldano@javalinux.it
  * 
- * @phase process-sources
  */
-public class TestedByMojo extends AbstractMojo {
-    /**
-     * Location of the file.
-     * 
-     * @parameter expression="${project.build.directory}"
-     * @required
-     */
-    private File outputDirectory;
-
-    public void execute() throws MojoExecutionException {
-	getLog().info("Trying logs... " + outputDirectory);
-
-	File f = outputDirectory;
-
-	if (!f.exists()) {
-	    f.mkdirs();
-	}
-
-	File touch = new File(f, "touch.txt");
-
-	FileWriter w = null;
-	try {
-	    w = new FileWriter(touch);
-
-	    w.write("touch.txt");
-	} catch (IOException e) {
-	    throw new MojoExecutionException("Error creating file " + touch, e);
-	} finally {
-	    if (w != null) {
-		try {
-		    w.close();
-		} catch (IOException e) {
-		    // ignore
-		}
-	    }
-	}
+public class SimpleTest extends AbstractMojoTestCase {
+    
+    @Test
+    public void testPluginCanBeRun() throws Exception {
+	TestedByMojo mojo = getTestedByMojo("target/test-classes/test-simple/plugin-config.xml");
+	mojo.execute();
+	assertTrue(new File("target/test/test-simple/target/touch.txt").exists());
     }
+    
+    private TestedByMojo getTestedByMojo(String pomXml) throws Exception {
+	File testPom = new File(getBasedir(), pomXml);
+
+	TestedByMojo mojo = (TestedByMojo) lookupMojo("testedby", testPom);
+
+	assertNotNull(mojo);
+
+	return mojo;
+    }
+
 }
