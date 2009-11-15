@@ -1,6 +1,6 @@
 <project>
   <build>
-    <pluginManagement>
+     <pluginManagement>
       <plugins>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -20,6 +20,11 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
+           <!-- Providing a project artifact only required because we're manually executing this mojo from code -->
+           <projectArtifact implementation="org.apache.maven.plugin.testing.stubs.ArtifactStub">
+            <groupId>it.javalinux.testedby.tests</groupId>
+            <artifactId>simple</artifactId>
+          </projectArtifact>
           <compileSourceRoots>
             <compileSourceRoot>${basedir}/target/test-classes/test-simple/src/main/java</compileSourceRoot>
           </compileSourceRoots>

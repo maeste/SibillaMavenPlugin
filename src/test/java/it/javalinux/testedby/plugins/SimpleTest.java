@@ -20,9 +20,11 @@
  */
 package it.javalinux.testedby.plugins;
 
+import it.javalinux.testedby.plugins.util.AbstractTestedByMojoTestCase;
+
 import java.io.File;
 
-import org.apache.maven.plugin.testing.AbstractMojoTestCase;
+import org.apache.maven.plugin.CompilerMojo;
 import org.junit.Test;
 
 /**
@@ -31,23 +33,15 @@ import org.junit.Test;
  * @author alessio.soldano@javalinux.it
  * 
  */
-public class SimpleTest extends AbstractMojoTestCase {
-    
+public class SimpleTest extends AbstractTestedByMojoTestCase {
+
     @Test
     public void testPluginCanBeRun() throws Exception {
-	TestedByMojo mojo = getTestedByMojo("target/test-classes/test-simple/plugin-config.xml");
-	mojo.execute();
+	CompilerMojo compilerMojo = getMojo(CompilerMojo.class, "org.apache.maven.plugins", "maven-compiler-plugin", "2.0.2", "compile", "target/test-classes/test-simple/plugin-config.xml");
+	compilerMojo.execute();
+	TestedByMojo testedByMojo = getMojo(TestedByMojo.class, "testedby", "target/test-classes/test-simple/plugin-config.xml");
+	testedByMojo.execute();
 	assertTrue(new File("target/test/test-simple/target/touch.txt").exists());
-    }
-    
-    private TestedByMojo getTestedByMojo(String pomXml) throws Exception {
-	File testPom = new File(getBasedir(), pomXml);
-
-	TestedByMojo mojo = (TestedByMojo) lookupMojo("testedby", testPom);
-
-	assertNotNull(mojo);
-
-	return mojo;
     }
 
 }
