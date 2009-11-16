@@ -21,27 +21,73 @@
 package it.javalinux.testedby.plugins;
 
 import it.javalinux.testedby.plugins.util.AbstractTestedByMojoTestCase;
-
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.maven.plugin.CompilerMojo;
+import org.apache.maven.plugin.TestCompilerMojo;
+import org.apache.maven.plugin.testing.stubs.ArtifactStub;
 import org.junit.Test;
 
 /**
  * A basic test
  * 
  * @author alessio.soldano@javalinux.it
+ * @since 14-Nov-2009
  * 
  */
 public class SimpleTest extends AbstractTestedByMojoTestCase {
 
     @Test
     public void testPluginCanBeRun() throws Exception {
-	CompilerMojo compilerMojo = getMojo(CompilerMojo.class, "org.apache.maven.plugins", "maven-compiler-plugin", "2.0.2", "compile", "target/test-classes/test-simple/plugin-config.xml");
+	final String pluginConfig = "target/test-classes/test-simple/plugin-config.xml";
+	
+	CompilerMojo compilerMojo = getMojo(CompilerMojo.class, "org.apache.maven.plugins", "maven-compiler-plugin", COMPILER_PLUGIN_VERSION, "compile", pluginConfig);
+	configureCompilerMojo(compilerMojo);
 	compilerMojo.execute();
-	TestedByMojo testedByMojo = getMojo(TestedByMojo.class, "testedby", "target/test-classes/test-simple/plugin-config.xml");
+	
+	TestCompilerMojo testMojo = getMojo(TestCompilerMojo.class, "org.apache.maven.plugins", "maven-compiler-plugin", COMPILER_PLUGIN_VERSION, "testCompile", pluginConfig);
+	configureTestCompilerMojo(testMojo, compilerMojo);
+	testMojo.execute();
+	
+	TestedByMojo testedByMojo = getMojo(TestedByMojo.class, "testedby", pluginConfig);
 	testedByMojo.execute();
 	assertTrue(new File("target/test/test-simple/target/touch.txt").exists());
+    }
+    
+    private void configureCompilerMojo(CompilerMojo mojo) throws Exception {
+	setVariableValueToObject( mojo, "log", new DebugEnabledLog() );
+        setVariableValueToObject( mojo, "projectArtifact", new ArtifactStub() );
+        setVariableValueToObject( mojo, "classpathElements", Collections.EMPTY_LIST );
+    }
+    
+    @SuppressWarnings("unchecked")
+    private void configureTestCompilerMojo(TestCompilerMojo testMojo, CompilerMojo compilerMojo) throws Exception {
+	setVariableValueToObject(testMojo, "log", new DebugEnabledLog());
+
+	File buildDir = (File) getVariableValueFromObject(compilerMojo, "buildDirectory");
+	File testClassesDir = new File(buildDir, "test-classes");
+	setVariableValueToObject(testMojo, "outputDirectory", testClassesDir);
+
+	List<String> testClasspathList = new ArrayList<String>();
+	testClasspathList.add(System.getProperty("localRepository") + "/junit/junit/" + JUNIT_VERSION + "/junit-" + JUNIT_VERSION + ".jar");
+	testClasspathList.add(((File) getVariableValueFromObject(compilerMojo, "outputDirectory")).getPath());
+	setVariableValueToObject(testMojo, "classpathElements", testClasspathList);
+
+	List<String> compileSourceRoots = (List<String>) getVariableValueFromObject(compilerMojo, "compileSourceRoots");
+	List<String> testSourceRoots = new LinkedList<String>();
+	for (String compileSourceRoot : compileSourceRoots) {
+	    int pos = compileSourceRoot.lastIndexOf("/main/java");
+	    String testSourceRoot = compileSourceRoot.substring(0, pos) + "/test/java";
+	    if (compileSourceRoot.length() > pos + 10) {
+		testSourceRoot = testSourceRoot + compileSourceRoot.substring(pos + 10);
+	    }
+	    testSourceRoots.add(testSourceRoot);
+	}
+	setVariableValueToObject(testMojo, "compileSourceRoots", testSourceRoots);
     }
 
 }

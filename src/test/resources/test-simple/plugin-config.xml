@@ -1,30 +1,10 @@
 <project>
   <build>
-     <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>2.0.2</version>
-          <configuration>
-            <source>1.5</source>
-            <target>1.5</target>
-            <maxmem>256M</maxmem>
-            <fork>${compiler.fork}</fork>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-           <!-- Providing a project artifact only required because we're manually executing this mojo from code -->
-           <projectArtifact implementation="org.apache.maven.plugin.testing.stubs.ArtifactStub">
-            <groupId>it.javalinux.testedby.tests</groupId>
-            <artifactId>simple</artifactId>
-          </projectArtifact>
           <compileSourceRoots>
             <compileSourceRoot>${basedir}/target/test-classes/test-simple/src/main/java</compileSourceRoot>
           </compileSourceRoots>
@@ -32,6 +12,10 @@
           <debug>true</debug>
           <outputDirectory>${basedir}/target/test/test-simple/target/classes</outputDirectory>
           <buildDirectory>${basedir}/target/test/test-simple/target</buildDirectory>
+          <source>1.5</source>
+          <target>1.5</target>
+          <maxmem>256M</maxmem>
+          <fork>${compiler.fork}</fork>
         </configuration>
       </plugin>
       <plugin>

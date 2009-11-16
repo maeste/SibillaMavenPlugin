@@ -21,13 +21,11 @@
 package it.javalinux.testedby.plugins.util;
 
 import java.io.File;
-import java.io.FileReader;
 
 import org.apache.maven.plugin.Mojo;
+import org.apache.maven.plugin.logging.SystemStreamLog;
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 import org.codehaus.plexus.configuration.PlexusConfiguration;
-import org.codehaus.plexus.util.xml.Xpp3Dom;
-import org.codehaus.plexus.util.xml.Xpp3DomBuilder;
 
 /**
  * Utility class for providing additional means of looking up mojo classes.
@@ -37,6 +35,9 @@ import org.codehaus.plexus.util.xml.Xpp3DomBuilder;
  *
  */
 public abstract class AbstractTestedByMojoTestCase extends AbstractMojoTestCase {
+    
+    public static final String COMPILER_PLUGIN_VERSION = "2.0.2";
+    public static final String JUNIT_VERSION = "4.7";
     
     @SuppressWarnings("unchecked")
     protected <T extends Mojo> T getMojo(Class<T> mojoClass, String goal, String pomXml) throws Exception {
@@ -64,5 +65,16 @@ public abstract class AbstractTestedByMojoTestCase extends AbstractMojoTestCase 
 	PlexusConfiguration pluginConfiguration = extractPluginConfiguration( artifactId, pom );
         return lookupMojo( groupId, artifactId, version, goal, pluginConfiguration );
     }
-    
+
+    protected class DebugEnabledLog extends SystemStreamLog {
+	public DebugEnabledLog() {
+	    super();
+	}
+
+	@Override
+	public boolean isDebugEnabled() {
+	    return true;
+	}
+    }
+
 }
