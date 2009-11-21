@@ -46,10 +46,29 @@ public class RunsRepository {
     private File file;
     private Map<String, Long> repository = new HashMap<String, Long>();
     
+    /**
+     * Create a repository using the default filename in the current directory
+     * 
+     */
+    public RunsRepository() {
+	file = new File(DEFAULT_REPO_FILENAME);
+    }
+    
+    /**
+     * Create a repository using the default filename in the specified directory
+     * 
+     * @param dir
+     */
     public RunsRepository(File dir) {
 	file = new File(dir, DEFAULT_REPO_FILENAME);
     }
     
+    /**
+     * Create a repository using a filename with the provided name in the specified directory
+     * 
+     * @param dir
+     * @param filename
+     */
     public RunsRepository(File dir, String filename) {
 	file = new File(dir, filename);
     }

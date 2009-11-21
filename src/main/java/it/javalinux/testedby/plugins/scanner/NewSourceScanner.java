@@ -21,6 +21,7 @@
 package it.javalinux.testedby.plugins.scanner;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Set;
 
 /**
@@ -40,8 +41,12 @@ public class NewSourceScanner extends TestedBySourceScanner {
     
     @Override
     protected boolean includeSource(File file) {
-	Long lastRun = getRepository().getLastRunTimeMillis(file.getAbsolutePath());
-	return (lastRun == null);
+	try {
+	    Long lastRun = getRepository().getLastRunTimeMillis(file.getCanonicalPath());
+	    return (lastRun == null);
+	} catch (IOException e) {
+	    throw new RuntimeException(e);
+	}
     }
 
 }
