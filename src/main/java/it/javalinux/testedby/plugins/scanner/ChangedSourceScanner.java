@@ -47,7 +47,7 @@ public class ChangedSourceScanner extends TestedBySourceScanner {
     protected boolean includeSource(File file) {
 	try {
 	    Long lastRun = getRepository().getLastRunTimeMillis(file.getCanonicalPath());
-	    return (lastRun != null && file.lastModified() > lastRun + lastUpdatedWithinMsecs);
+	    return (lastRun != null && file.lastModified() > lastRun - lastUpdatedWithinMsecs);
 	} catch (IOException e) {
 	    throw new RuntimeException(e);
 	}
