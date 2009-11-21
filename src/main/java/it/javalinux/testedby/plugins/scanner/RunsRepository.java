@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,9 +42,9 @@ import java.util.logging.Logger;
 public class RunsRepository {
     
     private static Logger log = Logger.getLogger(RunsRepository.class.getName());
-    private static final String DEFAULT_REPO_FILENAME = "testedby-runs-repository.bin";
+    static final String DEFAULT_REPO_FILENAME = "testedby-runs-repository.bin";
     private File file;
-    private Map<String, Long> repository;
+    private Map<String, Long> repository = new HashMap<String, Long>();
     
     public RunsRepository(File dir) {
 	file = new File(dir, DEFAULT_REPO_FILENAME);
