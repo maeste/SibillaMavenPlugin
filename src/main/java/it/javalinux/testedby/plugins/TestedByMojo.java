@@ -21,21 +21,38 @@
 
 package it.javalinux.testedby.plugins;
 
+import java.io.File;
+import java.util.List;
+
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-
 /**
- * Sample goal that touches a timestamp file.
  * 
  * @goal testedby
  * 
  * @phase process-sources
  */
-public class TestedByMojo extends AbstractMojo {
+public class TestedByMojo extends AbstractMojo {    
+
+    /**
+     * The source directories containing the sources
+     *
+     * @parameter expression="${project.sourceRoots}"
+     * @required
+     * @readonly
+     */
+    private List sourceRoots;
+
+    /**
+     * Project classpath.
+     *
+     * @parameter expression="${project.classpathElements}"
+     * @required
+     * @readonly
+     */
+    private List classpathElements;
+    
     /**
      * Location of the file.
      * 
@@ -43,33 +60,56 @@ public class TestedByMojo extends AbstractMojo {
      * @required
      */
     private File outputDirectory;
+    
+    /**
+     * The source directories containing the test-source
+     *
+     * @parameter expression="${project.testCompileSourceRoots}"
+     * @required
+     * @readonly
+     */
+    private List testSourceRoots;
+
+    /**
+     * Project test classpath.
+     *
+     * @parameter expression="${project.testClasspathElements}"
+     * @required
+     * @readonly
+     */
+    private List testClasspathElements;
+
+    /**
+     * The compiled test classes directory
+     *
+     * @parameter expression="${project.build.testOutputDirectory}"
+     * @required
+     * @readonly
+     */
+    private File testOutputDirectory;
+
+
+
+    /**
+     * Set to true to for verbose logging
+     *
+     * @parameter expression="${maven.compiler.verbose}" default-value="false"
+     */
+    private boolean verbose;
+
+    /**
+     * Sets the granularity in milliseconds of the last modification
+     * date for testing whether a source needs has changed since last run.
+     *
+     * @parameter expression="${lastModGranularityMs}" default-value="0"
+     */
+    private int staleMillis;
+    
+    
+    
 
     public void execute() throws MojoExecutionException {
 	getLog().info("Trying logs... " + outputDirectory);
-
-	File f = outputDirectory;
-
-	if (!f.exists()) {
-	    f.mkdirs();
-	}
-
-	File touch = new File(f, "touch.txt");
-
-	FileWriter w = null;
-	try {
-	    w = new FileWriter(touch);
-
-	    w.write("touch.txt");
-	} catch (IOException e) {
-	    throw new MojoExecutionException("Error creating file " + touch, e);
-	} finally {
-	    if (w != null) {
-		try {
-		    w.close();
-		} catch (IOException e) {
-		    // ignore
-		}
-	    }
-	}
+	
     }
 }

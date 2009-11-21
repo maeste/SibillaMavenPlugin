@@ -53,8 +53,8 @@ public class SimpleTest extends AbstractTestedByMojoTestCase {
 	configureTestCompilerMojo(testMojo, compilerMojo);
 	testMojo.execute();
 	
-	TestedByMojo testedByMojo = getMojo(TestedByMojo.class, "testedby", pluginConfig);
-	testedByMojo.execute();
+	SimpleMojo simpleMojo = getMojo(SimpleMojo.class, "simple", pluginConfig);
+	simpleMojo.execute();
 	assertTrue(new File("target/test/test-simple/target/touch.txt").exists());
     }
     
