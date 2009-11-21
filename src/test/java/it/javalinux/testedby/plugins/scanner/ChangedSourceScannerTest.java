@@ -27,6 +27,8 @@ import static org.junit.matchers.JUnitMatchers.hasItem;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.codehaus.plexus.compiler.util.scan.InclusionScanException;
@@ -176,6 +178,93 @@ public class ChangedSourceScannerTest {
 	dir.delete();
 	dir.mkdir();
 	return dir;
+    }
+    
+    @Test
+    public void shouldCorrectlyHandleExclusions() throws IOException, InclusionScanException
+    {
+	File srcDir = createTempDir();
+	File targetDir = createTempDir();
+	File source1 = new File(srcDir, "MyClass1.java");
+	assertTrue(source1.createNewFile());
+	File target1 = new File(targetDir, "MyClass1.class");
+	assertTrue(target1.createNewFile());
+	File source2 = new File(srcDir, "MyClass2.java");
+	assertTrue(source2.createNewFile());
+	File target2 = new File(targetDir, "MyClass2.class");
+	assertTrue(target2.createNewFile());
+	
+	RunsRepository repository = new RunsRepository();
+	repository.setLastRunTimeMillis(source1.getCanonicalPath(), new Long(1)); //target last ran years ago...
+	repository.setLastRunTimeMillis(source2.getCanonicalPath(), new Long(1)); //target last ran years ago...
+	
+	Set<String> excludes = new HashSet<String>();
+	Set<String> includes = new HashSet<String>();
+	includes.add("**/*");
+	ChangedSourceScanner scanner = new ChangedSourceScanner(0, includes, excludes, repository);
+	scanner.addSourceMapping(new SuffixMapping(".java", ".class"));
+	Set<File> changedFiles = scanner.getIncludedSources(srcDir, targetDir);
+	assertThat(changedFiles.size(), is(2));
+	assertThat(changedFiles, hasItem(source1));
+	assertThat(changedFiles, hasItem(source2));
+	
+	excludes.add(source1.getName());
+	scanner = new ChangedSourceScanner(0, includes, excludes, repository);
+	scanner.addSourceMapping(new SuffixMapping(".java", ".class"));
+	changedFiles = scanner.getIncludedSources(srcDir, targetDir);
+	assertThat(changedFiles.size(), is(1));
+	assertThat(changedFiles, hasItem(source2));
+	
+	excludes.add(source2.getName());
+	scanner = new ChangedSourceScanner(0, includes, excludes, repository);
+	scanner.addSourceMapping(new SuffixMapping(".java", ".class"));
+	changedFiles = scanner.getIncludedSources(srcDir, targetDir);
+	assertThat(changedFiles.size(), is(0));
+
+	delete(new File[]{source1, target1, source2, target2, srcDir, targetDir});
+    }
+    
+    @Test
+    public void shouldCorrectlyHandleInclusions() throws IOException, InclusionScanException
+    {
+	File srcDir = createTempDir();
+	File targetDir = createTempDir();
+	File source1 = new File(srcDir, "MyClass1.java");
+	assertTrue(source1.createNewFile());
+	File target1 = new File(targetDir, "MyClass1.class");
+	assertTrue(target1.createNewFile());
+	File source2 = new File(srcDir, "MyClass2.java");
+	assertTrue(source2.createNewFile());
+	File target2 = new File(targetDir, "MyClass2.class");
+	assertTrue(target2.createNewFile());
+	
+	RunsRepository repository = new RunsRepository();
+	repository.setLastRunTimeMillis(source1.getCanonicalPath(), new Long(1)); //target last ran years ago...
+	repository.setLastRunTimeMillis(source2.getCanonicalPath(), new Long(1)); //target last ran years ago...
+	
+	Set<String> excludes = Collections.emptySet();
+	Set<String> includes = new HashSet<String>();
+	ChangedSourceScanner scanner = new ChangedSourceScanner(0, includes, excludes, repository);
+	scanner.addSourceMapping(new SuffixMapping(".java", ".class"));
+	Set<File> changedFiles = scanner.getIncludedSources(srcDir, targetDir);
+	assertThat(changedFiles.size(), is(0));
+	
+	includes.add(source1.getName());
+	scanner = new ChangedSourceScanner(0, includes, excludes, repository);
+	scanner.addSourceMapping(new SuffixMapping(".java", ".class"));
+	changedFiles = scanner.getIncludedSources(srcDir, targetDir);
+	assertThat(changedFiles.size(), is(1));
+	assertThat(changedFiles, hasItem(source1));
+	
+	includes.add(source2.getName());
+	scanner = new ChangedSourceScanner(0, includes, excludes, repository);
+	scanner.addSourceMapping(new SuffixMapping(".java", ".class"));
+	changedFiles = scanner.getIncludedSources(srcDir, targetDir);
+	assertThat(changedFiles.size(), is(2));
+	assertThat(changedFiles, hasItem(source1));
+	assertThat(changedFiles, hasItem(source2));
+
+	delete(new File[]{source1, target1, source2, target2, srcDir, targetDir});
     }
     
     private static void delete(File... files) {
