@@ -22,16 +22,19 @@
 package it.javalinux.testedby.plugins;
 
 import java.io.File;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 
 /**
+ * The TestedBy Maven plugin Mojo
  * 
  * @goal testedby
  * 
- * @phase process-sources
+ * @phase test
  */
 public class TestedByMojo extends AbstractMojo {    
 
@@ -42,7 +45,7 @@ public class TestedByMojo extends AbstractMojo {
      * @required
      * @readonly
      */
-    private List sourceRoots;
+    private List<String> sourceRoots;
 
     /**
      * Project classpath.
@@ -51,7 +54,7 @@ public class TestedByMojo extends AbstractMojo {
      * @required
      * @readonly
      */
-    private List classpathElements;
+    private List<String> classpathElements;
     
     /**
      * Location of the file.
@@ -68,7 +71,7 @@ public class TestedByMojo extends AbstractMojo {
      * @required
      * @readonly
      */
-    private List testSourceRoots;
+    private List<String> testSourceRoots;
 
     /**
      * Project test classpath.
@@ -77,7 +80,7 @@ public class TestedByMojo extends AbstractMojo {
      * @required
      * @readonly
      */
-    private List testClasspathElements;
+    private List<String> testClasspathElements;
 
     /**
      * The compiled test classes directory
@@ -88,6 +91,19 @@ public class TestedByMojo extends AbstractMojo {
      */
     private File testOutputDirectory;
 
+    /**
+     * A list of inclusion filters for the compiler.
+     *
+     * @parameter
+     */
+    private Set<String> includes = new HashSet<String>();
+
+    /**
+     * A list of exclusion filters for the compiler.
+     *
+     * @parameter
+     */
+    private Set<String> excludes = new HashSet<String>();
 
 
     /**
@@ -101,15 +117,91 @@ public class TestedByMojo extends AbstractMojo {
      * Sets the granularity in milliseconds of the last modification
      * date for testing whether a source needs has changed since last run.
      *
-     * @parameter expression="${lastModGranularityMs}" default-value="0"
+     * @parameter expression="${testedby.lastModGranularityMs}" default-value="0"
      */
     private int staleMillis;
     
     
     
-
+    /**
+     * 
+     * {@inheritDoc}
+     *
+     * @see org.apache.maven.plugin.AbstractMojo#execute()
+     */
     public void execute() throws MojoExecutionException {
 	getLog().info("Trying logs... " + outputDirectory);
 	
     }
+    
+    /**
+     * @return sourceRoots
+     */
+    List<String> getSourceRoots() {
+        return sourceRoots;
+    }
+
+    /**
+     * @return classpathElements
+     */
+    List<String> getClasspathElements() {
+        return classpathElements;
+    }
+
+    /**
+     * @return outputDirectory
+     */
+    File getOutputDirectory() {
+        return outputDirectory;
+    }
+
+    /**
+     * @return testSourceRoots
+     */
+    List<String> getTestSourceRoots() {
+        return testSourceRoots;
+    }
+
+    /**
+     * @return testClasspathElements
+     */
+    List<String> getTestClasspathElements() {
+        return testClasspathElements;
+    }
+
+    /**
+     * @return testOutputDirectory
+     */
+    File getTestOutputDirectory() {
+        return testOutputDirectory;
+    }
+    
+    /**
+     * @return includes
+     */
+    Set<String> getIncludes() {
+        return includes;
+    }
+
+    /**
+     * @return excludes
+     */
+    Set<String> getExcludes() {
+        return excludes;
+    }
+
+    /**
+     * @return verbose
+     */
+    boolean isVerbose() {
+        return verbose;
+    }
+
+    /**
+     * @return staleMillis
+     */
+    int getStaleMillis() {
+        return staleMillis;
+    }
+
 }

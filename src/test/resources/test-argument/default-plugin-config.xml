@@ -1,0 +1,11 @@
+<project>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>it.javalinux.testedby.plugins</groupId>
+        <artifactId>maven-testedby-plugin</artifactId>
+        <configuration/>
+      </plugin>
+    </plugins>
+  </build>
+</project>

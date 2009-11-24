@@ -33,7 +33,7 @@ import java.io.IOException;
  * 
  * @goal simple
  * 
- * @phase process-sources
+ * @phase test
  */
 public class SimpleMojo extends AbstractMojo {
     /**
