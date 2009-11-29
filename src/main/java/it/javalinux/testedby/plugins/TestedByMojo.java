@@ -21,10 +21,10 @@
 
 package it.javalinux.testedby.plugins;
 
-import it.javalinux.testedby.metadata.impl.Helper;
 import it.javalinux.testedby.plugins.MavenLogStreamConsumer.Type;
 import it.javalinux.testedby.plugins.scanner.ChangedOrNewSourceScanner;
 import it.javalinux.testedby.plugins.scanner.RunsRepository;
+import it.javalinux.testedby.plugins.scanner.TestedBySourceScanner;
 import it.javalinux.testedby.runner.impl.JunitTestRunner;
 
 import java.io.File;
@@ -48,7 +48,6 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.compiler.util.scan.InclusionScanException;
-import org.codehaus.plexus.compiler.util.scan.SourceInclusionScanner;
 import org.codehaus.plexus.compiler.util.scan.mapping.SuffixMapping;
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.cli.CommandLineUtils;
@@ -246,31 +245,6 @@ public class TestedByMojo extends AbstractMojo {
      * @see org.apache.maven.plugin.AbstractMojo#execute()
      */
     public void execute() throws MojoExecutionException {
-	// logs
-	Log log = getLog();
-	if (log.isDebugEnabled()) {
-	    log.debug("Classpath:");
-	    for (String s : getClasspathElements()) {
-		log.debug(" " + s);
-	    }
-	    log.debug("Source roots:");
-	    for (String root : getSourceRoots()) {
-		log.debug(" " + root);
-	    }
-	    log.debug("Output directory:");
-	    log.debug(" " + getOutputDirectory());
-	    log.debug("Test classpath:");
-	    for (String s : getTestClasspathElements()) {
-		log.debug(" " + s);
-	    }
-	    log.debug("Test source roots:");
-	    for (String root : getTestSourceRoots()) {
-		log.debug(" " + root);
-	    }
-	    log.debug("Test output directory:");
-	    log.debug(" " + getTestOutputDirectory());
-	}
-
 	Long time = System.currentTimeMillis();
 	RunsRepository repository = new RunsRepository(getTargetDirectory());
 	repository.load();
@@ -280,29 +254,27 @@ public class TestedByMojo extends AbstractMojo {
 	    Configuration config = new Configuration();
 	    config.setRunner(getRunnerClass());
 	    
-	    // scanners
-	    SourceInclusionScanner classesUnderTestScanner = getSourceInclusionScanner(repository, getStaleMillis());
+	    // use scanners to first get changed sources and then retrieve the corresponding targets (internally uses the mappings)
+	    TestedBySourceScanner classesUnderTestScanner = getSourceInclusionScanner(repository, getStaleMillis());
 	    Set<File> filesClassesUnderTest = computeChangedSources(getSourceRoots(), classesUnderTestScanner, getOutputDirectory());
-	    List<String> classesUnderTest = config.getChangedClassesUnderTest();
-	    int pos = getOutputDirectory().getCanonicalPath().length();
-	    for (File file : filesClassesUnderTest) {
+	    List<File> classesUnderTest = config.getChangedClassesUnderTest();
+	    classesUnderTest.addAll(computeChangedTargets(getSourceRoots(), classesUnderTestScanner, getOutputDirectory()));
+	    for (File file : filesClassesUnderTest) { //update repository after finishing using it
 		repository.setLastRunTimeMillis(file.getCanonicalPath(), time);
-		String filename = file.getCanonicalPath();
-		classesUnderTest.add(Helper.getCanonicalNameFromJavaAssistName(filename.substring(pos, filename.length() - 5)));
 	    }
-	    SourceInclusionScanner testClassesScanner = getTestSourceInclusionScanner(repository, staleMillis);
+	    
+	    TestedBySourceScanner testClassesScanner = getTestSourceInclusionScanner(repository, staleMillis);
 	    Set<File> filesTestClasses = computeChangedSources(getTestSourceRoots(), testClassesScanner, getTestOutputDirectory());
-	    List<String> testClasses = config.getChangedTestClasses();
-	    pos = getTestOutputDirectory().getCanonicalPath().length();
-	    for (File file : filesTestClasses) {
+	    List<File> testClasses = config.getChangedTestClasses();
+	    testClasses.addAll(computeChangedTargets(getTestSourceRoots(), testClassesScanner, getTestOutputDirectory()));
+	    for (File file : filesTestClasses) { //update repository after finishing using it
 		repository.setLastRunTimeMillis(file.getCanonicalPath(), time);
-		String filename = file.getCanonicalPath();
-		testClasses.add(Helper.getCanonicalNameFromJavaAssistName(filename.substring(pos, filename.length() - 5)));
 	    }
 	    
 	    // serializing configuration to temp file
 	    File confFile = File.createTempFile("TestedyBy-maven-plugin-", ".config");
 	    config.save(confFile);
+	    printDebugLogs(getLog(), config);
 	    
 	    // preparing arguments and invoking runner in new process
 	    String testedByPluginJar = getBuildPluginArtifactPath("it.javalinux.testedby.plugins", "maven-testedby-plugin");
@@ -311,11 +283,11 @@ public class TestedByMojo extends AbstractMojo {
 	    String javassistJar = getArtifactPath("javassist", "javassist", null, "jar");
 
 	    int res = invokeExecutor("java", getExecutorArguments(testedByPluginJar, testedByJar, junitJar, javassistJar, confFile.getCanonicalPath()));
-	    log.info("res="+res);
-	    if (res < 0) {
-		
+	    if (res != 0) {
+		throw new MojoExecutionException("Error during TestedBy invocation, child process returned value: " + res);
 	    }
-	    
+	} catch (MojoExecutionException mee) {
+	    throw mee;
 	} catch (Exception e) {
 	    throw new MojoExecutionException("Error while running TestedByMojo: ", e);
 	}
@@ -338,20 +310,15 @@ public class TestedByMojo extends AbstractMojo {
 	bootCpArg.append(junitJar);
 	bootCpArg.append(File.pathSeparator);
 	bootCpArg.append(javassistJar);
-	args.add(bootCpArg.toString());
-	args.add("-javaagent:" + testedByJar);
 	List<String> cpElements = getTestClasspathElements();
 	if (cpElements != null && !cpElements.isEmpty()) {
-	    args.add("-cp");
-	    StringBuilder cpArg = new StringBuilder();
 	    for (Iterator<String> it = cpElements.iterator(); it.hasNext();) {
-		cpArg.append(it.next());
-		if (it.hasNext()) {
-		    cpArg.append(File.pathSeparator);
-		}
+		bootCpArg.append(File.pathSeparator);
+		bootCpArg.append(it.next());
 	    }
-	    args.add(cpArg.toString());
 	}
+	args.add(bootCpArg.toString());
+	args.add("-javaagent:" + testedByJar);
 	args.add(Executor.class.getCanonicalName());
 	args.add(configPath);
 	return args.toArray(new String[args.size()]);
@@ -406,8 +373,7 @@ public class TestedByMojo extends AbstractMojo {
 	throw new RuntimeException("it.javalinux.testedby.plugins:maven-testedby-plugin not found");
     }
     
-    @SuppressWarnings("unchecked")
-    private static Set<File> computeChangedSources(List<String> sourceRoots, SourceInclusionScanner scanner, File outputDirectory) throws MojoExecutionException {
+    private static Set<File> computeChangedSources(List<String> sourceRoots, TestedBySourceScanner scanner, File outputDirectory) throws MojoExecutionException {
 	scanner.addSourceMapping(new SuffixMapping(".java", ".class"));
 	Set<File> changedFiles = new HashSet<File>();
 	for (String sourceRoot : sourceRoots) {
@@ -418,20 +384,73 @@ public class TestedByMojo extends AbstractMojo {
 	    try {
 		changedFiles.addAll(scanner.getIncludedSources(rootFile, outputDirectory));
 	    } catch (InclusionScanException e) {
-		throw new MojoExecutionException("Error scanning source root: \'" + sourceRoot + "\' " + "for changed files since last run.", e);
+		throw new MojoExecutionException("Error scanning source root: \'" + sourceRoot + "\' " + " for changed files since last run.", e);
 	    }
 	}
 	return changedFiles;
     }
     
-    protected SourceInclusionScanner getSourceInclusionScanner(RunsRepository repository, int staleMillis) {
+    private static Set<File> computeChangedTargets(List<String> sourceRoots, TestedBySourceScanner scanner, File outputDirectory) throws MojoExecutionException {
+	Set<File> changedFiles = new HashSet<File>();
+	for (String sourceRoot : sourceRoots) {
+	    File rootFile = new File(sourceRoot);
+	    if (!rootFile.isDirectory()) {
+		continue;
+	    }
+	    try {
+		changedFiles.addAll(scanner.getIncludedTargets(rootFile, outputDirectory));
+	    } catch (InclusionScanException e) {
+		throw new MojoExecutionException("Error retrieving targets for source root: \'" + sourceRoot + "\'", e);
+	    }
+	}
+	return changedFiles;
+    }
+    
+    private void printDebugLogs(Log log, Configuration config) {
+	if (log.isDebugEnabled()) {
+	    log.debug("Classpath:");
+	    for (String s : getClasspathElements()) {
+		log.debug(" " + s);
+	    }
+	    log.debug("Source roots:");
+	    for (String root : getSourceRoots()) {
+		log.debug(" " + root);
+	    }
+	    log.debug("Output directory:");
+	    log.debug(" " + getOutputDirectory());
+	    log.debug("Test classpath:");
+	    for (String s : getTestClasspathElements()) {
+		log.debug(" " + s);
+	    }
+	    log.debug("Test source roots:");
+	    for (String root : getTestSourceRoots()) {
+		log.debug(" " + root);
+	    }
+	    log.debug("Test output directory:");
+	    log.debug(" " + getTestOutputDirectory());
+	    log.debug("Classes under test changed since last run: ");
+	    for (File f : config.getChangedClassesUnderTest()) {
+		log.debug(" " + f);
+	    }
+	    log.debug("Test classes changed since last run: ");
+	    for (File f : config.getChangedTestClasses()) {
+		log.debug(" " + f);
+	    }
+	    log.debug("Provided TestedBy runner:");
+	    log.debug(" " + config.getRunner());
+	    log.debug("Provided TestedBy metadata serializer:");
+	    log.debug(" " + config.getSerializer());
+	}
+    }
+    
+    protected TestedBySourceScanner getSourceInclusionScanner(RunsRepository repository, int staleMillis) {
 	if (includes.isEmpty()) {
 	    includes.add("**/*.java");
 	}
 	return new ChangedOrNewSourceScanner(staleMillis, includes, excludes, repository);
     }
 
-    protected SourceInclusionScanner getTestSourceInclusionScanner(RunsRepository repository, int staleMillis) {
+    protected TestedBySourceScanner getTestSourceInclusionScanner(RunsRepository repository, int staleMillis) {
 	if (testIncludes.isEmpty()) {
 	    testIncludes.add("**/*.java");
 	}

@@ -40,9 +40,9 @@ public class NewSourceScanner extends TestedBySourceScanner {
     }
     
     @Override
-    protected boolean includeSource(File file) {
+    protected boolean include(File sourceFile) {
 	try {
-	    Long lastRun = getRepository().getLastRunTimeMillis(file.getCanonicalPath());
+	    Long lastRun = getRepository().getLastRunTimeMillis(sourceFile.getCanonicalPath());
 	    return (lastRun == null);
 	} catch (IOException e) {
 	    throw new RuntimeException(e);

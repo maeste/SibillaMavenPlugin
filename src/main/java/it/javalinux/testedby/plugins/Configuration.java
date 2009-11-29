@@ -42,8 +42,8 @@ public class Configuration implements Serializable {
     private static final long serialVersionUID = 4239665033888035442L;
     
     private String runner;
-    private List<String> changedClassesUnderTest = new LinkedList<String>();
-    private List<String> changedTestClasses = new LinkedList<String>();
+    private List<File> changedClassesUnderTest = new LinkedList<File>();
+    private List<File> changedTestClasses = new LinkedList<File>();
     private String serializer;
     
     /**
@@ -61,25 +61,25 @@ public class Configuration implements Serializable {
     /**
      * @return changedClassesUnderTest
      */
-    public List<String> getChangedClassesUnderTest() {
+    public List<File> getChangedClassesUnderTest() {
         return changedClassesUnderTest;
     }
     /**
      * @param changedClassesUnderTest Sets changedClassesUnderTest to the specified value.
      */
-    public void setChangedClassesUnderTest(List<String> changedClassesUnderTest) {
+    public void setChangedClassesUnderTest(List<File> changedClassesUnderTest) {
         this.changedClassesUnderTest = changedClassesUnderTest;
     }
     /**
      * @return changedTestClasses
      */
-    public List<String> getChangedTestClasses() {
+    public List<File> getChangedTestClasses() {
         return changedTestClasses;
     }
     /**
      * @param changedTestClasses Sets changedTestClasses to the specified value.
      */
-    public void setChangedTestClasses(List<String> changedTestClasses) {
+    public void setChangedTestClasses(List<File> changedTestClasses) {
         this.changedTestClasses = changedTestClasses;
     }
     /**

@@ -23,11 +23,17 @@ package it.javalinux.testedby.plugins;
 import it.javalinux.testedby.metadata.serializer.MetadataSerializer;
 import it.javalinux.testedby.runner.TestRunner;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.io.PrintStream;
 import java.util.LinkedList;
 import java.util.List;
+
+import javassist.ClassPool;
+import javassist.CtClass;
 
 /**
  * This class is responsible for calling a TestedBy runner in a new process.
@@ -39,6 +45,8 @@ import java.util.List;
  *
  */
 public class Executor {
+    
+    private static final PrintStream output = System.out;
     
     /**
      * Entry point for the executor; the caller (the mojo) provides
@@ -52,12 +60,15 @@ public class Executor {
 	    Configuration config = readConfiguration(args[0]);
 	    TestRunner runner = getRunnerInstance(config.getRunner());
 	    MetadataSerializer serializer = getSerializerInstance(config.getSerializer());
+	    getClassDefitions(config.getChangedClassesUnderTest());
+	    getClassDefitions(config.getChangedTestClasses());
 	    if (serializer != null) {
 		runner.run(getClassDefitions(config.getChangedClassesUnderTest()), getClassDefitions(config.getChangedTestClasses()), serializer);
 	    } else {
 		runner.run(getClassDefitions(config.getChangedClassesUnderTest()), getClassDefitions(config.getChangedTestClasses()));
 	    }
 	} catch (Throwable t) {
+	    t.printStackTrace(output);
 	    throw new RuntimeException(t);
 	}
     }
@@ -77,10 +88,22 @@ public class Executor {
 	return serializerClass.newInstance();
     }
     
-    private static List<Class<?>> getClassDefitions(List<String> names) throws ClassNotFoundException {
+    private static List<Class<?>> getClassDefitions(List<File> classFiles) throws IOException, RuntimeException, ClassNotFoundException {
 	List<Class<?>> result = new LinkedList<Class<?>>();
-	for (String name : names) {
-	    result.add(Class.forName(name));
+	ClassPool cp = ClassPool.getDefault();
+	for (File f : classFiles) {
+	    InputStream fis = new FileInputStream(f);
+	    try {
+		CtClass cc = cp.makeClassIfNew(fis);
+		Class<?> clazz = Class.forName(cc.getName());
+		result.add(clazz);
+	    } finally {
+		try {
+		    fis.close();
+		} catch (Exception e) {
+		    // ignore
+		}
+	    }
 	}
 	return result;
     }
