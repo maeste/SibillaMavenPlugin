@@ -22,6 +22,7 @@
 package it.javalinux.testedby.plugins;
 
 import it.javalinux.testedby.metadata.impl.Helper;
+import it.javalinux.testedby.plugins.MavenLogStreamConsumer.Type;
 import it.javalinux.testedby.plugins.scanner.ChangedOrNewSourceScanner;
 import it.javalinux.testedby.plugins.scanner.RunsRepository;
 import it.javalinux.testedby.runner.impl.JunitTestRunner;
@@ -52,7 +53,6 @@ import org.codehaus.plexus.compiler.util.scan.mapping.SuffixMapping;
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.cli.CommandLineUtils;
 import org.codehaus.plexus.util.cli.Commandline;
-import org.codehaus.plexus.util.cli.CommandLineUtils.StringStreamConsumer;
 
 /**
  * The TestedBy Maven plugin Mojo
@@ -361,21 +361,12 @@ public class TestedByMojo extends AbstractMojo {
 	Commandline cl = new Commandline(command);
 	cl.addArguments(arguments);
 	int returnValue;
-	StringStreamConsumer output = new StringStreamConsumer();
-	StringStreamConsumer error = new StringStreamConsumer();
-	try {
-	    if (getLog().isDebugEnabled()) {
-		getLog().debug("Command line: " + cl);
-	    }
-	    returnValue = CommandLineUtils.executeCommandLine(cl, output, error);
-	} finally {
-	    getLog().info(output.getOutput());
-	    String errorMessage = error.getOutput();
-	    if (!StringUtils.isEmpty(errorMessage)) {
-		returnValue = -1;
-	    }
-	    getLog().error(errorMessage);
+	MavenLogStreamConsumer output = new MavenLogStreamConsumer(getLog(), Type.OUTPUT);
+	MavenLogStreamConsumer error = new MavenLogStreamConsumer(getLog(), Type.ERROR);
+	if (getLog().isDebugEnabled()) {
+	    getLog().debug("Command line: " + cl);
 	}
+	returnValue = CommandLineUtils.executeCommandLine(cl, output, error);
 	return returnValue;
     }
     
