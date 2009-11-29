@@ -5,6 +5,7 @@
         <groupId>it.javalinux.testedby.plugins</groupId>
         <artifactId>maven-testedby-plugin</artifactId>
         <configuration>
+          <targetDirectory>target-dir</targetDirectory>
           <outputDirectory>output-dir</outputDirectory>
           <testOutputDirectory>test-output-dir</testOutputDirectory>
           <verbose>true</verbose>

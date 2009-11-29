@@ -43,6 +43,7 @@ public class ArgumentTest extends AbstractTestedByMojoTestCase {
 	
 	TestedByMojo testedByMojo = getMojo(TestedByMojo.class, "testedby", pluginConfig);
 //	testedByMojo.execute();
+	assertEquals("target-dir", testedByMojo.getTargetDirectory().getName());
 	assertEquals("output-dir", testedByMojo.getOutputDirectory().getName());
 	assertEquals("test-output-dir", testedByMojo.getTestOutputDirectory().getName());
 	assertEquals(true, testedByMojo.isVerbose());
@@ -61,6 +62,7 @@ public class ArgumentTest extends AbstractTestedByMojoTestCase {
 	final String pluginConfig = "target/test-classes/test-argument/default-plugin-config.xml";
 	
 	TestedByMojo testedByMojo = getMojo(TestedByMojo.class, "testedby", pluginConfig);
+	assertNull(testedByMojo.getTargetDirectory());
 	assertNull(testedByMojo.getOutputDirectory());
 	assertNull(testedByMojo.getTestOutputDirectory());
 	assertEquals(false, testedByMojo.isVerbose());

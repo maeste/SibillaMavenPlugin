@@ -118,6 +118,14 @@ public class TestedByMojo extends AbstractMojo {
     // ------------ Parameters leveraging special maven properties for injecting execution status ------------
     
     /**
+     * The target directory
+     * 
+     * @parameter expression="${project.build.directory}"
+     * @required
+     */
+    private File targetDirectory;
+    
+    /**
      * The source directories containing the sources
      *
      * @parameter expression="${project.compileSourceRoots}"
@@ -264,10 +272,8 @@ public class TestedByMojo extends AbstractMojo {
 	}
 
 	Long time = System.currentTimeMillis();
-	RunsRepository repository = new RunsRepository(getOutputDirectory());
+	RunsRepository repository = new RunsRepository(getTargetDirectory());
 	repository.load();
-	RunsRepository testRepository = new RunsRepository(getTestOutputDirectory());
-	testRepository.load();
 
 	try {
 	    // creating configuration...
@@ -284,12 +290,12 @@ public class TestedByMojo extends AbstractMojo {
 		String filename = file.getCanonicalPath();
 		classesUnderTest.add(Helper.getCanonicalNameFromJavaAssistName(filename.substring(pos, filename.length() - 5)));
 	    }
-	    SourceInclusionScanner testClassesScanner = getTestSourceInclusionScanner(testRepository, staleMillis);
+	    SourceInclusionScanner testClassesScanner = getTestSourceInclusionScanner(repository, staleMillis);
 	    Set<File> filesTestClasses = computeChangedSources(getTestSourceRoots(), testClassesScanner, getTestOutputDirectory());
 	    List<String> testClasses = config.getChangedTestClasses();
 	    pos = getTestOutputDirectory().getCanonicalPath().length();
 	    for (File file : filesTestClasses) {
-		testRepository.setLastRunTimeMillis(file.getCanonicalPath(), time);
+		repository.setLastRunTimeMillis(file.getCanonicalPath(), time);
 		String filename = file.getCanonicalPath();
 		testClasses.add(Helper.getCanonicalNameFromJavaAssistName(filename.substring(pos, filename.length() - 5)));
 	    }
@@ -317,11 +323,6 @@ public class TestedByMojo extends AbstractMojo {
 	//saving run
 	try {
 	    repository.save();
-	} catch (IOException e) {
-	    getLog().warn("Unable to write run's data to disk: ", e);
-	}
-	try {
-	    testRepository.save();
 	} catch (IOException e) {
 	    getLog().warn("Unable to write run's data to disk: ", e);
 	}
@@ -540,8 +541,11 @@ public class TestedByMojo extends AbstractMojo {
 	return runnerClass;
     }
     
-    MavenProject getMavenProject() {
-	return mavenProject;
+    /**
+     * @return targetDirectory
+     */
+    File getTargetDirectory() {
+	return targetDirectory;
     }
 
 }

@@ -97,6 +97,10 @@ public class RunsRepository {
 	FileInputStream fis = null;
 	ObjectInputStream ois = null;
 	Map<String, Long> data = null;
+	if (!file.exists()) {
+	    log.info("Could not find " + file + ", returning a new empty map.");
+	    return new HashMap<String, Long>();
+	}
 	try {
 	    fis = new FileInputStream(file);
 	    ois = new ObjectInputStream(fis);
