@@ -9,6 +9,7 @@
           <testOutputDirectory>test-output-dir</testOutputDirectory>
           <verbose>true</verbose>
           <staleMillis>100</staleMillis>
+          <runnerClass>it.javalinux.testedby.runner.impl.MyTestRunner</runnerClass>
           <sourceRoots>
             <sourceRoot>source1</sourceRoot>
             <sourceRoot>source2</sourceRoot>

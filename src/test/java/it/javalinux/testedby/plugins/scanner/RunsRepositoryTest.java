@@ -127,5 +127,37 @@ public class RunsRepositoryTest {
 	dir.delete();
     }
     
+    @Test
+    public void shouldLoadAndOverwriteWithAdditions() throws IOException
+    {
+	File dir = File.createTempFile("TestedBy-maven-plugin-test-run-repository-", String.valueOf(System.currentTimeMillis()));
+	dir.delete();
+	dir.mkdir();
+
+	RunsRepository repo = new RunsRepository(dir);
+	repo.setLastRunTimeMillis("a", new Long(1));
+	repo.setLastRunTimeMillis("b", new Long(2));
+	repo.setLastRunTimeMillis("c", new Long(3));
+	repo.save();
+	
+	RunsRepository repo2 = new RunsRepository(dir);
+	repo2.load();
+	repo2.setLastRunTimeMillis("c", new Long(4));
+	repo2.save();
+
+	RunsRepository loadedRepo = new RunsRepository(dir);
+	loadedRepo.load();
+	assertThat(loadedRepo.getLastRunTimeMillis("a"), is(new Long(1)));
+	assertThat(loadedRepo.getLastRunTimeMillis("b"), is(new Long(2)));
+	assertThat(loadedRepo.getLastRunTimeMillis("c"), is(new Long(4)));
+	
+	File repoFile = new File(dir, RunsRepository.DEFAULT_REPO_FILENAME);
+	assertTrue(repoFile.exists());
+	assertTrue(repoFile.length() > 0);
+	
+	repoFile.delete();
+	dir.delete();
+    }
+    
     
 }

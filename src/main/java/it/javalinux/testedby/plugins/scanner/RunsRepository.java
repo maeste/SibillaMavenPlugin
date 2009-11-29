@@ -104,7 +104,7 @@ public class RunsRepository {
 	    data = (Map<String, Long>)ois.readObject();
 	} catch (Exception e) {
 	    log.log(Level.INFO, "Unable to deserialize TestedBy runs repository from file: " + file, e);
-	    return Collections.emptyMap();
+	    return new HashMap<String, Long>();
 	} finally {
 	    try {
 		ois.close();

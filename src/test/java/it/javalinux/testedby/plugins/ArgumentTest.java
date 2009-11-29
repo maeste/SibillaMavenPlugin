@@ -24,6 +24,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.matchers.JUnitMatchers.hasItems;
 
 import it.javalinux.testedby.plugins.util.AbstractTestedByMojoTestCase;
+import it.javalinux.testedby.runner.impl.JunitTestRunner;
 
 import org.junit.Test;
 
@@ -41,11 +42,12 @@ public class ArgumentTest extends AbstractTestedByMojoTestCase {
 	final String pluginConfig = "target/test-classes/test-argument/plugin-config.xml";
 	
 	TestedByMojo testedByMojo = getMojo(TestedByMojo.class, "testedby", pluginConfig);
-	testedByMojo.execute();
+//	testedByMojo.execute();
 	assertEquals("output-dir", testedByMojo.getOutputDirectory().getName());
 	assertEquals("test-output-dir", testedByMojo.getTestOutputDirectory().getName());
 	assertEquals(true, testedByMojo.isVerbose());
 	assertEquals(100, testedByMojo.getStaleMillis());
+	assertEquals("it.javalinux.testedby.runner.impl.MyTestRunner", testedByMojo.getRunnerClass());
 	assertThat(testedByMojo.getSourceRoots(), hasItems(new String[]{"source1", "source2"}));
 	assertThat(testedByMojo.getClasspathElements(), hasItems(new String[]{"cpEl1", "cpEl2"}));
 	assertThat(testedByMojo.getTestSourceRoots(), hasItems(new String[]{"testSource1", "testSource2"}));
@@ -59,11 +61,11 @@ public class ArgumentTest extends AbstractTestedByMojoTestCase {
 	final String pluginConfig = "target/test-classes/test-argument/default-plugin-config.xml";
 	
 	TestedByMojo testedByMojo = getMojo(TestedByMojo.class, "testedby", pluginConfig);
-	testedByMojo.execute();
 	assertNull(testedByMojo.getOutputDirectory());
 	assertNull(testedByMojo.getTestOutputDirectory());
 	assertEquals(false, testedByMojo.isVerbose());
 	assertEquals(0, testedByMojo.getStaleMillis());
+	assertEquals(JunitTestRunner.class.getName(), testedByMojo.getRunnerClass());
 	assertNull(testedByMojo.getSourceRoots());
 	assertNull(testedByMojo.getClasspathElements());
 	assertNull(testedByMojo.getTestSourceRoots());
