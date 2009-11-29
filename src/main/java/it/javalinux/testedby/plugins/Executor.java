@@ -60,8 +60,6 @@ public class Executor {
 	    Configuration config = readConfiguration(args[0]);
 	    TestRunner runner = getRunnerInstance(config.getRunner());
 	    MetadataSerializer serializer = getSerializerInstance(config.getSerializer());
-	    getClassDefitions(config.getChangedClassesUnderTest());
-	    getClassDefitions(config.getChangedTestClasses());
 	    if (serializer != null) {
 		runner.run(getClassDefitions(config.getChangedClassesUnderTest()), getClassDefitions(config.getChangedTestClasses()), serializer);
 	    } else {
