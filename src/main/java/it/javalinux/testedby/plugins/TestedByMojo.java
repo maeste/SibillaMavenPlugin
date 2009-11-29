@@ -136,9 +136,9 @@ public class TestedByMojo extends AbstractMojo {
     private List<String> classpathElements;
     
     /**
-     * Location of the file.
+     * The compiled classes directory
      * 
-     * @parameter expression="${project.build.directory}"
+     * @parameter expression="${project.build.outputDirectory}"
      * @required
      */
     private File outputDirectory;
