@@ -20,6 +20,12 @@
  */
 package it.javalinux.testedby.plugins;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
@@ -87,5 +93,53 @@ public class Configuration implements Serializable {
      */
     public void setSerializer(String serializer) {
         this.serializer = serializer;
+    }
+    
+    @SuppressWarnings({ "null" })
+    public static Configuration load(File file) {
+	FileInputStream fis = null;
+	ObjectInputStream ois = null;
+	Configuration data = null;
+	try {
+	    fis = new FileInputStream(file);
+	    ois = new ObjectInputStream(fis);
+	    data = (Configuration)ois.readObject();
+	} catch (Exception e) {
+	    return null;
+	} finally {
+	    try {
+		ois.close();
+	    } catch (Exception e) {
+		//ignore
+	    }
+	    try {
+		fis.close();
+	    } catch (Exception e) {
+		//ignore
+	    }
+	}
+	return data;
+    }
+    
+    @SuppressWarnings("null")
+    public void save(File file) throws IOException {
+	FileOutputStream fos = null;
+	ObjectOutputStream oos = null;
+	try {
+	    fos = new FileOutputStream(file);
+	    oos = new ObjectOutputStream(fos);
+	    oos.writeObject(this);
+	} finally {
+	    try {
+		oos.close();
+	    } catch (Exception e) {
+		//ignore
+	    }
+	    try {
+		fos.close();
+	    } catch (Exception e) {
+		//ignore
+	    }
+	}
     }
 }

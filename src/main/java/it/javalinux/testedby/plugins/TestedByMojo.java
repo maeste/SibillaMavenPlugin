@@ -30,6 +30,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -40,6 +41,7 @@ import org.apache.maven.artifact.resolver.ArtifactNotFoundException;
 import org.apache.maven.artifact.resolver.ArtifactResolutionException;
 import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.model.Dependency;
+import org.apache.maven.model.Plugin;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
@@ -48,6 +50,9 @@ import org.codehaus.plexus.compiler.util.scan.InclusionScanException;
 import org.codehaus.plexus.compiler.util.scan.SourceInclusionScanner;
 import org.codehaus.plexus.compiler.util.scan.mapping.SuffixMapping;
 import org.codehaus.plexus.util.StringUtils;
+import org.codehaus.plexus.util.cli.CommandLineUtils;
+import org.codehaus.plexus.util.cli.Commandline;
+import org.codehaus.plexus.util.cli.CommandLineUtils.StringStreamConsumer;
 
 /**
  * The TestedBy Maven plugin Mojo
@@ -233,7 +238,7 @@ public class TestedByMojo extends AbstractMojo {
      * @see org.apache.maven.plugin.AbstractMojo#execute()
      */
     public void execute() throws MojoExecutionException {
-	//logs
+	// logs
 	Log log = getLog();
 	if (log.isDebugEnabled()) {
 	    log.debug("Classpath:");
@@ -245,7 +250,7 @@ public class TestedByMojo extends AbstractMojo {
 		log.debug(" " + root);
 	    }
 	    log.debug("Output directory:");
-	    log.debug(" " + outputDirectory);
+	    log.debug(" " + getOutputDirectory());
 	    log.debug("Test classpath:");
 	    for (String s : getTestClasspathElements()) {
 		log.debug(" " + s);
@@ -255,17 +260,17 @@ public class TestedByMojo extends AbstractMojo {
 		log.debug(" " + root);
 	    }
 	    log.debug("Test output directory:");
-	    log.debug(" " + testOutputDirectory);
+	    log.debug(" " + getTestOutputDirectory());
 	}
 
 	Long time = System.currentTimeMillis();
 	RunsRepository repository = new RunsRepository(getOutputDirectory());
 	repository.load();
-	RunsRepository testRepository = new RunsRepository(testOutputDirectory);
+	RunsRepository testRepository = new RunsRepository(getTestOutputDirectory());
 	testRepository.load();
 
 	try {
-	    //creating configuration...
+	    // creating configuration...
 	    Configuration config = new Configuration();
 	    config.setRunner(getRunnerClass());
 	    
@@ -289,42 +294,21 @@ public class TestedByMojo extends AbstractMojo {
 		testClasses.add(Helper.getCanonicalNameFromJavaAssistName(filename.substring(pos, filename.length() - 5)));
 	    }
 	    
-	    //classpath
+	    // serializing configuration to temp file
+	    File confFile = File.createTempFile("TestedyBy-maven-plugin-", ".config");
+	    config.save(confFile);
 	    
-	    //String command = "java -Xbootclasspath/a:" + testedByJar + ":" + junitJar + ":" + javassistJar + " -javaagent:" +
-	    //                 testedByJar + cp.toString() + " " + Executor.class.getCanonicalName();
-	    
-	    StringBuilder command = new StringBuilder("java -Xbootclasspath/a:");
-	    
+	    // preparing arguments and invoking runner in new process
+	    String testedByPluginJar = getBuildPluginArtifactPath("it.javalinux.testedby.plugins", "maven-testedby-plugin");
 	    String testedByJar = getArtifactPath("it.javalinux.testedby", "TestedBy", null, "jar");
 	    String junitJar = getArtifactPath("junit", "junit", null, "jar");
 	    String javassistJar = getArtifactPath("javassist", "javassist", null, "jar");
-	    
-	    command.append(testedByJar);
-	    command.append(File.pathSeparator);
-	    command.append(junitJar);
-	    command.append(File.pathSeparator);
-	    command.append(javassistJar);
-	    command.append(" -javaagent:");
-	    command.append(testedByJar);
-	    List<String> cpElements = getTestClasspathElements();
-	    if (cpElements != null && !cpElements.isEmpty()) {
-		command.append(" -cp ");
-		for (Iterator<String> it = cpElements.iterator(); it.hasNext(); ) {
-		    command.append(it.next());
-		    if (it.hasNext()) {
-			command.append(File.pathSeparator);
-		    }
-		}
+
+	    int res = invokeExecutor("java", getExecutorArguments(testedByPluginJar, testedByJar, junitJar, javassistJar, confFile.getCanonicalPath()));
+	    log.info("res="+res);
+	    if (res < 0) {
+		
 	    }
-	    command.append(" ");
-	    command.append(Executor.class.getCanonicalName());
-	    
-	    log.info(command);
-//	    // invoking runner in new process
-//	    Process p = Runtime.getRuntime().exec(command);
-//	    int res = p.waitFor();
-	    
 	    
 	} catch (Exception e) {
 	    throw new MojoExecutionException("Error while running TestedByMojo: ", e);
@@ -343,7 +327,67 @@ public class TestedByMojo extends AbstractMojo {
 	}
     }
     
+    private String[] getExecutorArguments(String testedByPluginJar, String testedByJar, String junitJar, String javassistJar, String configPath) {
+	List<String> args = new LinkedList<String>();
+	StringBuilder bootCpArg = new StringBuilder("-Xbootclasspath/a:");
+	bootCpArg.append(testedByJar);
+	bootCpArg.append(File.pathSeparator);
+	bootCpArg.append(testedByPluginJar);
+	bootCpArg.append(File.pathSeparator);
+	bootCpArg.append(junitJar);
+	bootCpArg.append(File.pathSeparator);
+	bootCpArg.append(javassistJar);
+	args.add(bootCpArg.toString());
+	args.add("-javaagent:" + testedByJar);
+	List<String> cpElements = getTestClasspathElements();
+	if (cpElements != null && !cpElements.isEmpty()) {
+	    args.add("-cp");
+	    StringBuilder cpArg = new StringBuilder();
+	    for (Iterator<String> it = cpElements.iterator(); it.hasNext();) {
+		cpArg.append(it.next());
+		if (it.hasNext()) {
+		    cpArg.append(File.pathSeparator);
+		}
+	    }
+	    args.add(cpArg.toString());
+	}
+	args.add(Executor.class.getCanonicalName());
+	args.add(configPath);
+	return args.toArray(new String[args.size()]);
+    }
+    
+    private int invokeExecutor(String command, String[] arguments) throws Exception {
+	Commandline cl = new Commandline(command);
+	cl.addArguments(arguments);
+	int returnValue;
+	StringStreamConsumer output = new StringStreamConsumer();
+	StringStreamConsumer error = new StringStreamConsumer();
+	try {
+	    if (getLog().isDebugEnabled()) {
+		getLog().debug("Command line: " + cl);
+	    }
+	    returnValue = CommandLineUtils.executeCommandLine(cl, output, error);
+	} finally {
+	    getLog().info(output.getOutput());
+	    String errorMessage = error.getOutput();
+	    if (!StringUtils.isEmpty(errorMessage)) {
+		returnValue = -1;
+	    }
+	    getLog().error(errorMessage);
+	}
+	return returnValue;
+    }
+    
     private String getArtifactPath(String groupId, String artifactId, String classifier, String type) throws ArtifactResolutionException, ArtifactNotFoundException, IOException {
+	if (pluginArtifacts != null) {
+	    for (Artifact artifact : pluginArtifacts) {
+		if (StringUtils.equals(groupId, artifact.getGroupId()) && StringUtils.equals(artifactId, artifact.getArtifactId()) &&
+			StringUtils.equals(classifier, artifact.getClassifier()) && StringUtils.equals(type, artifact.getType())) {
+		    resolver.resolve(artifact, remoteRepositories, localRepository);
+		    return artifact.getFile().getCanonicalPath();
+		}
+	    }
+	}
 	if (dependencies != null) {
 	    for (Dependency dep : dependencies) {
 		if (StringUtils.equals(groupId, dep.getGroupId()) && StringUtils.equals(artifactId, dep.getArtifactId()) &&
@@ -354,16 +398,20 @@ public class TestedByMojo extends AbstractMojo {
 		}
 	    }
 	}
-	if (pluginArtifacts != null) {
-	    for (Artifact artifact : pluginArtifacts) {
-		if (StringUtils.equals(groupId, artifact.getGroupId()) && StringUtils.equals(artifactId, artifact.getArtifactId()) &&
-			StringUtils.equals(classifier, artifact.getClassifier()) && StringUtils.equals(type, artifact.getType())) {
-		    resolver.resolve(artifact, remoteRepositories, localRepository);
-		    return artifact.getFile().getCanonicalPath();
-		}
+	return null;
+    }
+    
+    @SuppressWarnings("unchecked")
+    private String getBuildPluginArtifactPath(String groupId, String artifactId) throws ArtifactResolutionException, ArtifactNotFoundException, IOException {
+	List<Plugin> plugins = mavenProject.getBuildPlugins();
+	for (Plugin plugin : plugins) {
+	    if (StringUtils.equals(groupId, plugin.getGroupId()) && StringUtils.equals(artifactId, plugin.getArtifactId())) {
+		Artifact artifact = artifactFactory.createArtifactWithClassifier(plugin.getGroupId(), plugin.getArtifactId(), plugin.getVersion(), "jar", null);
+		resolver.resolve(artifact, remoteRepositories, localRepository);
+		return artifact.getFile().getCanonicalPath();
 	    }
 	}
-	return null;
+	throw new RuntimeException("it.javalinux.testedby.plugins:maven-testedby-plugin not found");
     }
     
     @SuppressWarnings("unchecked")
