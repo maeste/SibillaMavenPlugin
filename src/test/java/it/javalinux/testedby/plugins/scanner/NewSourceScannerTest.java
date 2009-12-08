@@ -63,6 +63,9 @@ public class NewSourceScannerTest {
 	
 	NewSourceScanner scanner = new NewSourceScanner(repository);
 	scanner.addSourceMapping(new SuffixMapping(".java", ".class"));
+	Set<File> newTargetFiles = scanner.getIncludedTargets(srcDir, targetDir);
+	assertThat(newTargetFiles.size(), is(1));
+	assertThat(newTargetFiles, hasItem(target2));
 	Set<File> newFiles = scanner.getIncludedSources(srcDir, targetDir);
 	assertThat(newFiles.size(), is(1));
 	assertThat(newFiles, hasItem(source2));
@@ -88,6 +91,10 @@ public class NewSourceScannerTest {
 	
 	NewSourceScanner scanner = new NewSourceScanner(repository);
 	scanner.addSourceMapping(new SuffixMapping(".java", ".class"));
+	Set<File> newTargetFiles = scanner.getIncludedTargets(srcDir, targetDir);
+	assertThat(newTargetFiles.size(), is(2));
+	assertThat(newTargetFiles, hasItem(target1));
+	assertThat(newTargetFiles, hasItem(target2));
 	Set<File> newFiles = scanner.getIncludedSources(srcDir, targetDir);
 	assertThat(newFiles.size(), is(2));
 	assertThat(newFiles, hasItem(source1));
@@ -117,6 +124,10 @@ public class NewSourceScannerTest {
 	includes.add("**/*");
 	NewSourceScanner scanner = new NewSourceScanner(includes, excludes, repository);
 	scanner.addSourceMapping(new SuffixMapping(".java", ".class"));
+	Set<File> changedTargetFiles = scanner.getIncludedTargets(srcDir, targetDir);
+	assertThat(changedTargetFiles.size(), is(2));
+	assertThat(changedTargetFiles, hasItem(target1));
+	assertThat(changedTargetFiles, hasItem(target2));
 	Set<File> changedFiles = scanner.getIncludedSources(srcDir, targetDir);
 	assertThat(changedFiles.size(), is(2));
 	assertThat(changedFiles, hasItem(source1));
@@ -125,6 +136,9 @@ public class NewSourceScannerTest {
 	excludes.add(source1.getName());
 	scanner = new NewSourceScanner(includes, excludes, repository);
 	scanner.addSourceMapping(new SuffixMapping(".java", ".class"));
+	changedTargetFiles = scanner.getIncludedTargets(srcDir, targetDir);
+	assertThat(changedTargetFiles.size(), is(1));
+	assertThat(changedTargetFiles, hasItem(target2));
 	changedFiles = scanner.getIncludedSources(srcDir, targetDir);
 	assertThat(changedFiles.size(), is(1));
 	assertThat(changedFiles, hasItem(source2));
@@ -132,6 +146,8 @@ public class NewSourceScannerTest {
 	excludes.add(source2.getName());
 	scanner = new NewSourceScanner(includes, excludes, repository);
 	scanner.addSourceMapping(new SuffixMapping(".java", ".class"));
+	changedTargetFiles = scanner.getIncludedTargets(srcDir, targetDir);
+	assertThat(changedTargetFiles.size(), is(0));
 	changedFiles = scanner.getIncludedSources(srcDir, targetDir);
 	assertThat(changedFiles.size(), is(0));
 
@@ -158,12 +174,17 @@ public class NewSourceScannerTest {
 	Set<String> includes = new HashSet<String>();
 	NewSourceScanner scanner = new NewSourceScanner(includes, excludes, repository);
 	scanner.addSourceMapping(new SuffixMapping(".java", ".class"));
+	Set<File> changedTargetFiles = scanner.getIncludedTargets(srcDir, targetDir);
+	assertThat(changedTargetFiles.size(), is(0));
 	Set<File> changedFiles = scanner.getIncludedSources(srcDir, targetDir);
 	assertThat(changedFiles.size(), is(0));
 	
 	includes.add(source1.getName());
 	scanner = new NewSourceScanner(includes, excludes, repository);
 	scanner.addSourceMapping(new SuffixMapping(".java", ".class"));
+	changedTargetFiles = scanner.getIncludedTargets(srcDir, targetDir);
+	assertThat(changedTargetFiles.size(), is(1));
+	assertThat(changedTargetFiles, hasItem(target1));
 	changedFiles = scanner.getIncludedSources(srcDir, targetDir);
 	assertThat(changedFiles.size(), is(1));
 	assertThat(changedFiles, hasItem(source1));
@@ -171,6 +192,10 @@ public class NewSourceScannerTest {
 	includes.add(source2.getName());
 	scanner = new NewSourceScanner(includes, excludes, repository);
 	scanner.addSourceMapping(new SuffixMapping(".java", ".class"));
+	changedTargetFiles = scanner.getIncludedTargets(srcDir, targetDir);
+	assertThat(changedTargetFiles.size(), is(2));
+	assertThat(changedTargetFiles, hasItem(target1));
+	assertThat(changedTargetFiles, hasItem(target2));
 	changedFiles = scanner.getIncludedSources(srcDir, targetDir);
 	assertThat(changedFiles.size(), is(2));
 	assertThat(changedFiles, hasItem(source1));
