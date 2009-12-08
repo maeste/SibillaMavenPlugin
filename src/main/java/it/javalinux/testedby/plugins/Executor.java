@@ -86,6 +86,20 @@ public class Executor {
 	return serializerClass.newInstance();
     }
     
+    /**
+     * Extracts the class definitions from the list of .class files.
+     * This is performed using javassist to get the class name from the bytecode and then
+     * simply using Class.forName with the retrieved names. Classes are not actually loaded
+     * using javassist as that would fail because TestedBy instrumentation kicks-in the
+     * loading process and redefines classes using javassist too; that marks the classes
+     * preventing javassist from working on them anymore.
+     * 
+     * @param classFiles
+     * @return The list of Class<?> corresponding to the specified list of class files
+     * @throws IOException
+     * @throws RuntimeException
+     * @throws ClassNotFoundException
+     */
     private static List<Class<?>> getClassDefitions(List<File> classFiles) throws IOException, RuntimeException, ClassNotFoundException {
 	List<Class<?>> result = new LinkedList<Class<?>>();
 	ClassPool cp = ClassPool.getDefault();
