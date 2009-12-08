@@ -63,6 +63,8 @@ public class ChangedSourceScannerTest {
 	scanner.addSourceMapping(new SuffixMapping(".java", ".class"));
 	Set<File> newFiles = scanner.getIncludedSources(srcDir, targetDir);
 	assertThat(newFiles.size(), is(0));
+	Set<File> newTargetFiles = scanner.getIncludedTargets(srcDir, targetDir);
+	assertThat(newTargetFiles.size(), is(0));
 	
 	delete(new File[]{source1, target1, source2, target2, srcDir, targetDir});
     }
@@ -91,12 +93,21 @@ public class ChangedSourceScannerTest {
 	assertThat(changedFiles.size(), is(1));
 	assertThat(changedFiles, hasItem(source1));
 	
+	Set<File> changedTargetFiles = scanner.getIncludedTargets(srcDir, targetDir);
+	assertThat(changedTargetFiles.size(), is(1));
+	assertThat(changedTargetFiles, hasItem(target1));
+	
 	repository.setLastRunTimeMillis(source2.getCanonicalPath(), new Long(1)); //target last ran years ago...
 	
 	changedFiles = scanner.getIncludedSources(srcDir, targetDir);
 	assertThat(changedFiles.size(), is(2));
 	assertThat(changedFiles, hasItem(source1));
 	assertThat(changedFiles, hasItem(source2));
+	
+	changedTargetFiles = scanner.getIncludedTargets(srcDir, targetDir);
+	assertThat(changedTargetFiles.size(), is(2));
+	assertThat(changedTargetFiles, hasItem(target1));
+	assertThat(changedTargetFiles, hasItem(target2));
 	
 	delete(new File[]{source1, target1, source2, target2, srcDir, targetDir});
     }
@@ -128,6 +139,10 @@ public class ChangedSourceScannerTest {
 	assertThat(changedFiles.size(), is(1));
 	assertThat(changedFiles, hasItem(source2));
 	
+	Set<File> changedTargetFiles = scanner.getIncludedTargets(srcDir, targetDir);
+	assertThat(changedTargetFiles.size(), is(1));
+	assertThat(changedTargetFiles, hasItem(target2));
+	
 	delete(new File[]{source1, target1, source2, target2, srcDir, targetDir});
     }
     
@@ -156,18 +171,26 @@ public class ChangedSourceScannerTest {
 	
 	Set<File> changedFiles = scanner.getIncludedSources(srcDir, targetDir);
 	assertThat(changedFiles.size(), is(0));
+	Set<File> changedTargetFiles = scanner.getIncludedTargets(srcDir, targetDir);
+	assertThat(changedTargetFiles.size(), is(0));
 	
 	repository.setLastRunTimeMillis(source2.getCanonicalPath(), System.currentTimeMillis() - 9*60*1000); //9 minutes ago
 	
 	changedFiles = scanner.getIncludedSources(srcDir, targetDir);
 	assertThat(changedFiles.size(), is(1));
 	assertThat(changedFiles, hasItem(source2));
+	changedTargetFiles = scanner.getIncludedTargets(srcDir, targetDir);
+	assertThat(changedTargetFiles.size(), is(1));
+	assertThat(changedTargetFiles, hasItem(target2));
 	
 	repository.setLastRunTimeMillis(source2.getCanonicalPath(), System.currentTimeMillis() - 15*60*1000); //15 minutes ago
 	
 	changedFiles = scanner.getIncludedSources(srcDir, targetDir);
 	assertThat(changedFiles.size(), is(1));
 	assertThat(changedFiles, hasItem(source2));
+	changedTargetFiles = scanner.getIncludedTargets(srcDir, targetDir);
+	assertThat(changedTargetFiles.size(), is(1));
+	assertThat(changedTargetFiles, hasItem(target2));
 	
 	delete(new File[]{source1, target1, source2, target2, srcDir, targetDir});
     }
@@ -207,6 +230,10 @@ public class ChangedSourceScannerTest {
 	assertThat(changedFiles.size(), is(2));
 	assertThat(changedFiles, hasItem(source1));
 	assertThat(changedFiles, hasItem(source2));
+	Set<File> changedTargetFiles = scanner.getIncludedTargets(srcDir, targetDir);
+	assertThat(changedTargetFiles.size(), is(2));
+	assertThat(changedTargetFiles, hasItem(target1));
+	assertThat(changedTargetFiles, hasItem(target2));
 	
 	excludes.add(source1.getName());
 	scanner = new ChangedSourceScanner(0, includes, excludes, repository);
@@ -214,12 +241,17 @@ public class ChangedSourceScannerTest {
 	changedFiles = scanner.getIncludedSources(srcDir, targetDir);
 	assertThat(changedFiles.size(), is(1));
 	assertThat(changedFiles, hasItem(source2));
+	changedTargetFiles = scanner.getIncludedTargets(srcDir, targetDir);
+	assertThat(changedTargetFiles.size(), is(1));
+	assertThat(changedTargetFiles, hasItem(target2));
 	
 	excludes.add(source2.getName());
 	scanner = new ChangedSourceScanner(0, includes, excludes, repository);
 	scanner.addSourceMapping(new SuffixMapping(".java", ".class"));
 	changedFiles = scanner.getIncludedSources(srcDir, targetDir);
 	assertThat(changedFiles.size(), is(0));
+	changedTargetFiles = scanner.getIncludedTargets(srcDir, targetDir);
+	assertThat(changedTargetFiles.size(), is(0));
 
 	delete(new File[]{source1, target1, source2, target2, srcDir, targetDir});
     }
@@ -248,6 +280,8 @@ public class ChangedSourceScannerTest {
 	scanner.addSourceMapping(new SuffixMapping(".java", ".class"));
 	Set<File> changedFiles = scanner.getIncludedSources(srcDir, targetDir);
 	assertThat(changedFiles.size(), is(0));
+	Set<File> changedTargetFiles = scanner.getIncludedTargets(srcDir, targetDir);
+	assertThat(changedTargetFiles.size(), is(0));
 	
 	includes.add(source1.getName());
 	scanner = new ChangedSourceScanner(0, includes, excludes, repository);
@@ -255,6 +289,9 @@ public class ChangedSourceScannerTest {
 	changedFiles = scanner.getIncludedSources(srcDir, targetDir);
 	assertThat(changedFiles.size(), is(1));
 	assertThat(changedFiles, hasItem(source1));
+	changedTargetFiles = scanner.getIncludedTargets(srcDir, targetDir);
+	assertThat(changedTargetFiles.size(), is(1));
+	assertThat(changedTargetFiles, hasItem(target1));
 	
 	includes.add(source2.getName());
 	scanner = new ChangedSourceScanner(0, includes, excludes, repository);
@@ -263,6 +300,10 @@ public class ChangedSourceScannerTest {
 	assertThat(changedFiles.size(), is(2));
 	assertThat(changedFiles, hasItem(source1));
 	assertThat(changedFiles, hasItem(source2));
+	changedTargetFiles = scanner.getIncludedTargets(srcDir, targetDir);
+	assertThat(changedTargetFiles.size(), is(2));
+	assertThat(changedTargetFiles, hasItem(target1));
+	assertThat(changedTargetFiles, hasItem(target2));
 
 	delete(new File[]{source1, target1, source2, target2, srcDir, targetDir});
     }
