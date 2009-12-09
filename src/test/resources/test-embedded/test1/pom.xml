@@ -35,6 +35,14 @@
             <staleMillis>100</staleMillis>
             <runnerClass>it.javalinux.testedby.runner.impl.JunitTestRunner</runnerClass>
           </configuration>
+          <executions>
+          <execution>
+            <phase>process-test-classes</phase>
+            <goals>
+              <goal>testedby</goal>
+            </goals>
+          </execution>
+          </executions>
         </plugin>
 	  </plugins>
 	</build>
