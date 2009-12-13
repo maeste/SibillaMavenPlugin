@@ -42,7 +42,9 @@
           </pomIncludes>
           <settingsFile>src/test/resources/test-embedded/settings.xml</settingsFile>
           <localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath>
-          <!-- <postBuildHookScript>verify.bsh</postBuildHookScript> -->
+          <preBuildHookScript>setup.bsh</preBuildHookScript>
+          <postBuildHookScript>verify.bsh</postBuildHookScript>
+          <addTestClassPath>true</addTestClassPath>
         </configuration>
         <executions>
           <execution>
@@ -53,6 +55,15 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <includes>
+            <include>**/*TestCase.java</include>
+            <include>**/*Test.java</include>
+          </includes>
+        </configuration>
       </plugin>
     </plugins>
   </build>

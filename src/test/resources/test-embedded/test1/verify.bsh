@@ -1,0 +1,16 @@
+import java.io.*;
+import it.javalinux.testedby.plugins.testHelpers.*;
+import java.util.*;
+import java.util.regex.*;
+
+try
+{
+    Test1Helper helper = new Test1Helper();
+    return helper.verify(basedir, localRepositoryPath, context);
+    
+}
+catch( Throwable t )
+{
+    t.printStackTrace();
+    return false;
+}
