@@ -20,17 +20,22 @@
  */
 package it.javalinux.testedby.plugins.testHelpers;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import it.javalinux.testedby.metadata.ClassLinkMetadata;
+import it.javalinux.testedby.metadata.TestsMetadata;
+import it.javalinux.testedby.metadata.serializer.impl.SimpleMetadataSerializer;
 import it.javalinux.testedby.plugins.scanner.RunsRepository;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
 /**
- * A helper class for test1 verify script.
+ * A helper class for test1 setup/verify scripts.
  * 
  * @author alessio.soldano@javalinux.it
  * @since 13-Dec-2009
@@ -63,17 +68,27 @@ public class Test1Helper implements VerifyScriptHelper, SetupScriptHelper {
 	File testedbyMetadata = new File(basedir, "testedbyMetadata.bin");
 	log.info("Checking for existence of testedby metadata: " + testedbyMetadata);
 	if (!testedbyMetadata.exists()) {
-	    System.out.println("FAILED!");
+	    log.severe("FAILED!");
 	    return false;
 	}
 	File runsRepository = new File(basedir, "target/testedby-runs-repository.bin");
 	log.info("Checking for existence of runs repository: " + runsRepository);
 	if (!runsRepository.exists()) {
-	    System.out.println("FAILED!");
+	    log.severe("FAILED!");
 	    return false;
 	}
-	// verify runs repository contents
 	
+	//verify metadata contents
+	SimpleMetadataSerializer deserializer = new SimpleMetadataSerializer();
+	TestsMetadata metadata = deserializer.deserialize(testedbyMetadata.getCanonicalPath());
+	List<ClassLinkMetadata> testClasses = metadata.getAllTestClasses();
+	List<ClassLinkMetadata> testedClasses = metadata.getAllTestedClasses();
+	assertEquals(1, testClasses.size());
+	assertEquals(1, testedClasses.size());
+	assertEquals("it.javalinux.testedby.SampleTest", testClasses.iterator().next().getClazz());
+	assertEquals("it.javalinux.testedby.Foo", testedClasses.iterator().next().getClazz());
+	
+	// verify runs repository contents
 	RunsRepository repo = new RunsRepository(new File(basedir, "target"));
 	repo.load();
 	String sampleTestPath = basedir.getCanonicalPath() + "/src/test/java/it/javalinux/testedby/SampleTest.java";
