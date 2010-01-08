@@ -61,7 +61,7 @@ import org.codehaus.plexus.util.cli.Commandline;
  * @goal testedby
  * 
  * @phase process-test-classes
- * @requiresDependencyResolution compile
+ * @requiresDependencyResolution test
  */
 public class TestedByMojo extends AbstractMojo {    
 
