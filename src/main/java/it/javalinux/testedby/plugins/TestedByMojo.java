@@ -280,9 +280,10 @@ public class TestedByMojo extends AbstractMojo {
 	    String testedByPluginJar = getBuildPluginArtifactPath("it.javalinux.testedby.plugins", "maven-testedby-plugin");
 	    String testedByJar = getArtifactPath("it.javalinux.testedby", "TestedBy", null, "jar");
 	    String junitJar = getArtifactPath("junit", "junit", null, "jar");
-	    String javassistJar = getArtifactPath("javassist", "javassist", null, "jar");
+	    String javassistJar = getArtifactPath("org.javassist", "javassist", null, "jar");
+	    String xStreamJar = getArtifactPath("com.thoughtworks.xstream", "xstream", null, "jar");
 
-	    int res = invokeExecutor("java", getExecutorArguments(testedByPluginJar, testedByJar, junitJar, javassistJar, confFile.getCanonicalPath()));
+	    int res = invokeExecutor("java", getExecutorArguments(testedByJar, confFile.getCanonicalPath(), testedByPluginJar, junitJar, javassistJar, xStreamJar));
 	    if (res != 0) {
 		throw new MojoExecutionException("Error during TestedBy invocation, child process returned value: " + res);
 	    }
@@ -300,16 +301,14 @@ public class TestedByMojo extends AbstractMojo {
 	}
     }
     
-    private String[] getExecutorArguments(String testedByPluginJar, String testedByJar, String junitJar, String javassistJar, String configPath) {
+    private String[] getExecutorArguments(String testedByJar, String configPath, String... additionalBootCPJars) {
 	List<String> args = new LinkedList<String>();
 	StringBuilder bootCpArg = new StringBuilder("-Xbootclasspath/a:");
 	bootCpArg.append(testedByJar);
-	bootCpArg.append(File.pathSeparator);
-	bootCpArg.append(testedByPluginJar);
-	bootCpArg.append(File.pathSeparator);
-	bootCpArg.append(junitJar);
-	bootCpArg.append(File.pathSeparator);
-	bootCpArg.append(javassistJar);
+	for (String s : additionalBootCPJars) {
+	    bootCpArg.append(File.pathSeparator);
+	    bootCpArg.append(s);
+	}
 	List<String> cpElements = getTestClasspathElements();
 	if (cpElements != null && !cpElements.isEmpty()) {
 	    for (Iterator<String> it = cpElements.iterator(); it.hasNext();) {
