@@ -57,7 +57,7 @@ public class Executor {
      */
     public static void main(String[] args) {
 	try {
-	    Configuration config = readConfiguration(args[0]);
+	    Configuration config = Configuration.load(new File(args[0]));
 	    TestRunner runner = getRunnerInstance(config.getRunner());
 	    MetadataSerializer serializer = getSerializerInstance(config.getSerializer());
 	    if (serializer != null) {
@@ -119,30 +119,4 @@ public class Executor {
 	}
 	return result;
     }
-    
-    @SuppressWarnings("null")
-    private static Configuration readConfiguration(String file) throws IOException, ClassNotFoundException
-    {
-	FileInputStream fis = null;
-	ObjectInputStream ois = null;
-	Configuration config = null;
-	try {
-	    fis = new FileInputStream(file);
-	    ois = new ObjectInputStream(fis);
-	    config = (Configuration) ois.readObject();
-	} finally {
-	    try {
-		ois.close();
-	    } catch (Exception e) {
-		//ignore
-	    }
-	    try {
-		fis.close();
-	    } catch (Exception e) {
-		//ignore
-	    }
-	}
-	return config;
-    }
-    
 }
