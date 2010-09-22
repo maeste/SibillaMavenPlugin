@@ -1,0 +1,262 @@
+Running pre-build script: /dati/project/testedby/mvn_plugin/target/test-embedded/test1/setup.bsh
+Sep 22, 2010 5:46:33 PM it.javalinux.sibilla.plugins.testHelpers.Test1Helper setup
+INFO: Setting start time: 1285170393765
+Finished pre-build script: /dati/project/testedby/mvn_plugin/target/test-embedded/test1/setup.bsh
+Warning: JAVA_HOME environment variable is not set.
+[INFO] Error stacktraces are turned on.
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building test1 1.0-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/plugins/maven-clean-plugin/2.4.1/maven-clean-plugin-2.4.1.jar
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/plugins/maven-clean-plugin/2.4.1/maven-clean-plugin-2.4.1.jar (23 KB at 1769.0 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/plugins/maven-resources-plugin/2.4.2/maven-resources-plugin-2.4.2.jar
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/plugins/maven-resources-plugin/2.4.2/maven-resources-plugin-2.4.2.jar (24 KB at 3968.9 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/plugins/maven-compiler-plugin/2.0.2/maven-compiler-plugin-2.0.2.jar
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/plugins/maven-compiler-plugin/2.0.2/maven-compiler-plugin-2.0.2.jar (18 KB at 4493.9 KB/sec)
+[INFO] 
+[INFO] --- maven-clean-plugin:2.4.1:clean (default-clean) @ test1 ---
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/plugins/maven-clean-plugin/2.4.1/maven-clean-plugin-2.4.1.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/plugins/maven-clean-plugin/2.4.1/maven-clean-plugin-2.4.1.pom (5 KB at 4059.6 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/plugins/maven-plugins/18/maven-plugins-18.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/plugins/maven-plugins/18/maven-plugins-18.pom (13 KB at 4232.1 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/maven-parent/16/maven-parent-16.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/maven-parent/16/maven-parent-16.pom (23 KB at 5681.6 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/apache/7/apache-7.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/apache/7/apache-7.pom (15 KB at 7045.9 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/maven-plugin-api/2.0.6/maven-plugin-api-2.0.6.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/maven-plugin-api/2.0.6/maven-plugin-api-2.0.6.pom (2 KB)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/maven/2.0.6/maven-2.0.6.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/maven/2.0.6/maven-2.0.6.pom (9 KB at 8835.0 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/maven-parent/5/maven-parent-5.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/maven-parent/5/maven-parent-5.pom (15 KB at 7439.9 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/apache/3/apache-3.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/apache/3/apache-3.pom (4 KB at 3349.6 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-utils/2.0.5/plexus-utils-2.0.5.pom
+Downloaded: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-utils/2.0.5/plexus-utils-2.0.5.pom (4 KB at 3255.9 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus/2.0.6/plexus-2.0.6.pom
+Downloaded: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus/2.0.6/plexus-2.0.6.pom (17 KB at 2338.6 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-utils/2.0.5/plexus-utils-2.0.5.jar
+Downloaded: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-utils/2.0.5/plexus-utils-2.0.5.jar (218 KB at 7030.3 KB/sec)
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.2:resources (default-resources) @ test1 ---
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/plugins/maven-resources-plugin/2.4.2/maven-resources-plugin-2.4.2.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/plugins/maven-resources-plugin/2.4.2/maven-resources-plugin-2.4.2.pom (5 KB at 4882.8 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/plugins/maven-plugins/17/maven-plugins-17.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/plugins/maven-plugins/17/maven-plugins-17.pom (13 KB at 6322.8 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/maven-project/2.0.6/maven-project-2.0.6.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/maven-project/2.0.6/maven-project-2.0.6.pom (3 KB at 2575.2 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/maven-settings/2.0.6/maven-settings-2.0.6.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/maven-settings/2.0.6/maven-settings-2.0.6.pom (2 KB at 977.1 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/maven-model/2.0.6/maven-model-2.0.6.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/maven-model/2.0.6/maven-model-2.0.6.pom (3 KB at 2975.6 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-utils/1.4.1/plexus-utils-1.4.1.pom
+Downloaded: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-utils/1.4.1/plexus-utils-1.4.1.pom (2 KB at 1864.3 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus/1.0.11/plexus-1.0.11.pom
+Downloaded: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus/1.0.11/plexus-1.0.11.pom (9 KB at 2919.6 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-container-default/1.0-alpha-9-stable-1/plexus-container-default-1.0-alpha-9-stable-1.pom
+Downloaded: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-container-default/1.0-alpha-9-stable-1/plexus-container-default-1.0-alpha-9-stable-1.pom (4 KB at 1928.2 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-containers/1.0.3/plexus-containers-1.0.3.pom
+Downloaded: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-containers/1.0.3/plexus-containers-1.0.3.pom (492 B at 480.5 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus/1.0.4/plexus-1.0.4.pom
+Downloaded: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus/1.0.4/plexus-1.0.4.pom (6 KB at 2801.3 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/junit/junit/3.8.1/junit-3.8.1.pom
+Downloaded: file:///home/maeste/.m2/repository/junit/junit/3.8.1/junit-3.8.1.pom (998 B at 487.3 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/maven-profile/2.0.6/maven-profile-2.0.6.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/maven-profile/2.0.6/maven-profile-2.0.6.pom (2 KB at 966.8 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/maven-artifact-manager/2.0.6/maven-artifact-manager-2.0.6.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/maven-artifact-manager/2.0.6/maven-artifact-manager-2.0.6.pom (3 KB at 1280.3 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/maven-repository-metadata/2.0.6/maven-repository-metadata-2.0.6.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/maven-repository-metadata/2.0.6/maven-repository-metadata-2.0.6.pom (2 KB at 1806.6 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/maven-artifact/2.0.6/maven-artifact-2.0.6.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/maven-artifact/2.0.6/maven-artifact-2.0.6.pom (2 KB at 1540.0 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/wagon/wagon-provider-api/1.0-beta-2/wagon-provider-api-1.0-beta-2.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/wagon/wagon-provider-api/1.0-beta-2/wagon-provider-api-1.0-beta-2.pom (680 B at 664.1 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/wagon/wagon/1.0-beta-2/wagon-1.0-beta-2.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/wagon/wagon/1.0-beta-2/wagon-1.0-beta-2.pom (6 KB at 2872.1 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/maven-parent/4/maven-parent-4.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/maven-parent/4/maven-parent-4.pom (10 KB at 3253.9 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/maven-plugin-registry/2.0.6/maven-plugin-registry-2.0.6.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/maven-plugin-registry/2.0.6/maven-plugin-registry-2.0.6.pom (2 KB at 1900.4 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-utils/1.5.15/plexus-utils-1.5.15.pom
+Downloaded: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-utils/1.5.15/plexus-utils-1.5.15.pom (7 KB at 3344.2 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus/2.0.2/plexus-2.0.2.pom
+Downloaded: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus/2.0.2/plexus-2.0.2.pom (12 KB at 3779.3 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/shared/maven-filtering/1.0-beta-4/maven-filtering-1.0-beta-4.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/shared/maven-filtering/1.0-beta-4/maven-filtering-1.0-beta-4.pom (5 KB at 4543.0 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/shared/maven-shared-components/15/maven-shared-components-15.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/shared/maven-shared-components/15/maven-shared-components-15.pom (10 KB at 4559.1 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/maven-core/2.0.6/maven-core-2.0.6.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/maven-core/2.0.6/maven-core-2.0.6.pom (7 KB at 3276.9 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/wagon/wagon-file/1.0-beta-2/wagon-file-1.0-beta-2.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/wagon/wagon-file/1.0-beta-2/wagon-file-1.0-beta-2.pom (637 B at 622.1 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/wagon/wagon-providers/1.0-beta-2/wagon-providers-1.0-beta-2.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/wagon/wagon-providers/1.0-beta-2/wagon-providers-1.0-beta-2.pom (2 KB at 1734.4 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/maven-plugin-parameter-documenter/2.0.6/maven-plugin-parameter-documenter-2.0.6.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/maven-plugin-parameter-documenter/2.0.6/maven-plugin-parameter-documenter-2.0.6.pom (2 KB at 1866.2 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/wagon/wagon-http-lightweight/1.0-beta-2/wagon-http-lightweight-1.0-beta-2.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/wagon/wagon-http-lightweight/1.0-beta-2/wagon-http-lightweight-1.0-beta-2.pom (2 KB at 1334.0 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/wagon/wagon-http-shared/1.0-beta-2/wagon-http-shared-1.0-beta-2.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/wagon/wagon-http-shared/1.0-beta-2/wagon-http-shared-1.0-beta-2.pom (845 B at 825.2 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/jtidy/jtidy/4aug2000r7-dev/jtidy-4aug2000r7-dev.pom
+Downloaded: file:///home/maeste/.m2/repository/jtidy/jtidy/4aug2000r7-dev/jtidy-4aug2000r7-dev.pom (2 KB at 638.2 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/xml-apis/xml-apis/1.0.b2/xml-apis-1.0.b2.pom
+Downloaded: file:///home/maeste/.m2/repository/xml-apis/xml-apis/1.0.b2/xml-apis-1.0.b2.pom (3 KB at 439.3 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/reporting/maven-reporting-api/2.0.6/maven-reporting-api-2.0.6.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/reporting/maven-reporting-api/2.0.6/maven-reporting-api-2.0.6.pom (2 KB at 855.5 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/reporting/maven-reporting/2.0.6/maven-reporting-2.0.6.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/reporting/maven-reporting/2.0.6/maven-reporting-2.0.6.pom (2 KB at 702.6 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/doxia/doxia-sink-api/1.0-alpha-7/doxia-sink-api-1.0-alpha-7.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/doxia/doxia-sink-api/1.0-alpha-7/doxia-sink-api-1.0-alpha-7.pom (424 B at 414.1 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/doxia/doxia/1.0-alpha-7/doxia-1.0-alpha-7.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/doxia/doxia/1.0-alpha-7/doxia-1.0-alpha-7.pom (4 KB at 3821.3 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/maven-error-diagnostics/2.0.6/maven-error-diagnostics-2.0.6.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/maven-error-diagnostics/2.0.6/maven-error-diagnostics-2.0.6.pom (2 KB at 1664.1 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/commons-cli/commons-cli/1.0/commons-cli-1.0.pom
+Downloaded: file:///home/maeste/.m2/repository/commons-cli/commons-cli/1.0/commons-cli-1.0.pom (3 KB at 2055.7 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/wagon/wagon-ssh-external/1.0-beta-2/wagon-ssh-external-1.0-beta-2.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/wagon/wagon-ssh-external/1.0-beta-2/wagon-ssh-external-1.0-beta-2.pom (2 KB at 1424.8 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/wagon/wagon-ssh-common/1.0-beta-2/wagon-ssh-common-1.0-beta-2.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/wagon/wagon-ssh-common/1.0-beta-2/wagon-ssh-common-1.0-beta-2.pom (851 B at 831.1 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-interactivity-api/1.0-alpha-4/plexus-interactivity-api-1.0-alpha-4.pom
+Downloaded: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-interactivity-api/1.0-alpha-4/plexus-interactivity-api-1.0-alpha-4.pom (7 KB at 3462.4 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-container-default/1.0-alpha-7/plexus-container-default-1.0-alpha-7.pom
+Downloaded: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-container-default/1.0-alpha-7/plexus-container-default-1.0-alpha-7.pom (2 KB at 629.4 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/plexus/plexus-containers/1.0.2/plexus-containers-1.0.2.pom
+Downloaded: file:///home/maeste/.m2/repository/plexus/plexus-containers/1.0.2/plexus-containers-1.0.2.pom (471 B at 230.0 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/plexus/plexus-root/1.0.3/plexus-root-1.0.3.pom
+Downloaded: file:///home/maeste/.m2/repository/plexus/plexus-root/1.0.3/plexus-root-1.0.3.pom (6 KB at 5877.9 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/plexus/plexus-utils/1.0.2/plexus-utils-1.0.2.pom
+Downloaded: file:///home/maeste/.m2/repository/plexus/plexus-utils/1.0.2/plexus-utils-1.0.2.pom (740 B at 722.7 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/maven-plugin-descriptor/2.0.6/maven-plugin-descriptor-2.0.6.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/maven-plugin-descriptor/2.0.6/maven-plugin-descriptor-2.0.6.pom (2 KB at 1970.7 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/maven-monitor/2.0.6/maven-monitor-2.0.6.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/maven-monitor/2.0.6/maven-monitor-2.0.6.pom (2 KB at 1224.6 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/wagon/wagon-ssh/1.0-beta-2/wagon-ssh-1.0-beta-2.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/wagon/wagon-ssh/1.0-beta-2/wagon-ssh-1.0-beta-2.pom (2 KB at 1692.4 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/com/jcraft/jsch/0.1.27/jsch-0.1.27.pom
+Downloaded: file:///home/maeste/.m2/repository/com/jcraft/jsch/0.1.27/jsch-0.1.27.pom (965 B at 942.4 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/classworlds/classworlds/1.1/classworlds-1.1.pom
+Downloaded: file:///home/maeste/.m2/repository/classworlds/classworlds/1.1/classworlds-1.1.pom (4 KB at 3246.1 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-interpolation/1.12/plexus-interpolation-1.12.pom
+Downloaded: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-interpolation/1.12/plexus-interpolation-1.12.pom (889 B at 868.2 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-components/1.1.14/plexus-components-1.1.14.pom
+Downloaded: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-components/1.1.14/plexus-components-1.1.14.pom (6 KB at 5705.1 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/sonatype/plexus/plexus-build-api/0.0.4/plexus-build-api-0.0.4.pom
+Downloaded: file:///home/maeste/.m2/repository/org/sonatype/plexus/plexus-build-api/0.0.4/plexus-build-api-0.0.4.pom (3 KB at 1397.9 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/sonatype/spice/spice-parent/10/spice-parent-10.pom
+Downloaded: file:///home/maeste/.m2/repository/org/sonatype/spice/spice-parent/10/spice-parent-10.pom (3 KB at 2944.3 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/sonatype/forge/forge-parent/3/forge-parent-3.pom
+Downloaded: file:///home/maeste/.m2/repository/org/sonatype/forge/forge-parent/3/forge-parent-3.pom (5 KB at 2457.5 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-utils/1.5.8/plexus-utils-1.5.8.pom
+Downloaded: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-utils/1.5.8/plexus-utils-1.5.8.pom (8 KB at 7874.0 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-interpolation/1.13/plexus-interpolation-1.13.pom
+Downloaded: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-interpolation/1.13/plexus-interpolation-1.13.pom (890 B at 869.1 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-components/1.1.15/plexus-components-1.1.15.pom
+Downloaded: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-components/1.1.15/plexus-components-1.1.15.pom (3 KB at 2781.2 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus/2.0.3/plexus-2.0.3.pom
+Downloaded: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus/2.0.3/plexus-2.0.3.pom (16 KB at 7549.3 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-utils/1.5.15/plexus-utils-1.5.15.jar
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/shared/maven-filtering/1.0-beta-4/maven-filtering-1.0-beta-4.jar
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/wagon/wagon-file/1.0-beta-2/wagon-file-1.0-beta-2.jar
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/wagon/wagon-http-lightweight/1.0-beta-2/wagon-http-lightweight-1.0-beta-2.jar
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/wagon/wagon-file/1.0-beta-2/wagon-file-1.0-beta-2.jar (10 KB at 3237.0 KB/sec)
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/wagon/wagon-http-lightweight/1.0-beta-2/wagon-http-lightweight-1.0-beta-2.jar (13 KB at 6017.1 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/wagon/wagon-http-shared/1.0-beta-2/wagon-http-shared-1.0-beta-2.jar
+Downloading: file:///home/maeste/.m2/repository/jtidy/jtidy/4aug2000r7-dev/jtidy-4aug2000r7-dev.jar
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/wagon/wagon-http-shared/1.0-beta-2/wagon-http-shared-1.0-beta-2.jar (10 KB at 3114.9 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/xml-apis/xml-apis/1.0.b2/xml-apis-1.0.b2.jar
+Downloading: file:///home/maeste/.m2/repository/junit/junit/3.8.1/junit-3.8.1.jar
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/shared/maven-filtering/1.0-beta-4/maven-filtering-1.0-beta-4.jar (34 KB at 2106.9 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/reporting/maven-reporting-api/2.0.6/maven-reporting-api-2.0.6.jar
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/reporting/maven-reporting-api/2.0.6/maven-reporting-api-2.0.6.jar (10 KB at 1386.9 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/doxia/doxia-sink-api/1.0-alpha-7/doxia-sink-api-1.0-alpha-7.jar
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/doxia/doxia-sink-api/1.0-alpha-7/doxia-sink-api-1.0-alpha-7.jar (6 KB at 1449.2 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/commons-cli/commons-cli/1.0/commons-cli-1.0.jar
+Downloaded: file:///home/maeste/.m2/repository/xml-apis/xml-apis/1.0.b2/xml-apis-1.0.b2.jar (107 KB at 4641.6 KB/sec)
+Downloaded: file:///home/maeste/.m2/repository/jtidy/jtidy/4aug2000r7-dev/jtidy-4aug2000r7-dev.jar (135 KB at 4486.8 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/wagon/wagon-ssh-external/1.0-beta-2/wagon-ssh-external-1.0-beta-2.jar
+Downloaded: file:///home/maeste/.m2/repository/junit/junit/3.8.1/junit-3.8.1.jar (119 KB at 4222.6 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/wagon/wagon-ssh-common/1.0-beta-2/wagon-ssh-common-1.0-beta-2.jar
+Downloaded: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-utils/1.5.15/plexus-utils-1.5.15.jar (223 KB at 5711.9 KB/sec)
+Downloaded: file:///home/maeste/.m2/repository/commons-cli/commons-cli/1.0/commons-cli-1.0.jar (30 KB at 5882.2 KB/sec)
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/wagon/wagon-ssh-common/1.0-beta-2/wagon-ssh-common-1.0-beta-2.jar (25 KB at 12307.1 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-interactivity-api/1.0-alpha-4/plexus-interactivity-api-1.0-alpha-4.jar
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/wagon/wagon-ssh/1.0-beta-2/wagon-ssh-1.0-beta-2.jar
+Downloading: file:///home/maeste/.m2/repository/com/jcraft/jsch/0.1.27/jsch-0.1.27.jar
+Downloaded: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-interactivity-api/1.0-alpha-4/plexus-interactivity-api-1.0-alpha-4.jar (14 KB at 13092.8 KB/sec)
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/wagon/wagon-ssh/1.0-beta-2/wagon-ssh-1.0-beta-2.jar (24 KB at 23046.9 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-interpolation/1.13/plexus-interpolation-1.13.jar
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/wagon/wagon-ssh-external/1.0-beta-2/wagon-ssh-external-1.0-beta-2.jar (13 KB at 2045.6 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/sonatype/plexus/plexus-build-api/0.0.4/plexus-build-api-0.0.4.jar
+Downloaded: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-interpolation/1.13/plexus-interpolation-1.13.jar (60 KB at 29813.0 KB/sec)
+Downloaded: file:///home/maeste/.m2/repository/org/sonatype/plexus/plexus-build-api/0.0.4/plexus-build-api-0.0.4.jar (7 KB)
+Downloaded: file:///home/maeste/.m2/repository/com/jcraft/jsch/0.1.27/jsch-0.1.27.jar (120 KB at 39717.1 KB/sec)
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /dati/project/testedby/mvn_plugin/target/test-embedded/test1/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.0.2:compile (default-compile) @ test1 ---
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/plugins/maven-compiler-plugin/2.0.2/maven-compiler-plugin-2.0.2.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/plugins/maven-compiler-plugin/2.0.2/maven-compiler-plugin-2.0.2.pom (3 KB at 2356.4 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/apache/maven/plugins/maven-plugins/8/maven-plugins-8.pom
+Downloaded: file:///home/maeste/.m2/repository/org/apache/maven/plugins/maven-plugins/8/maven-plugins-8.pom (6 KB at 5967.8 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-compiler-manager/1.5.3/plexus-compiler-manager-1.5.3.pom
+Downloaded: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-compiler-manager/1.5.3/plexus-compiler-manager-1.5.3.pom (634 B at 619.1 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-compiler-javac/1.5.3/plexus-compiler-javac-1.5.3.pom
+Downloaded: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-compiler-javac/1.5.3/plexus-compiler-javac-1.5.3.pom (797 B at 778.3 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-compilers/1.5.3/plexus-compilers-1.5.3.pom
+Downloaded: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-compilers/1.5.3/plexus-compilers-1.5.3.pom (8 KB at 7468.8 KB/sec)
+Downloading: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-utils/1.0.5/plexus-utils-1.0.5.pom
+Downloaded: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-utils/1.0.5/plexus-utils-1.0.5.pom (918 B)
+Downloading: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-compiler-manager/1.5.3/plexus-compiler-manager-1.5.3.jar
+Downloading: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-compiler-javac/1.5.3/plexus-compiler-javac-1.5.3.jar
+Downloaded: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-compiler-manager/1.5.3/plexus-compiler-manager-1.5.3.jar (6 KB at 5172.9 KB/sec)
+Downloaded: file:///home/maeste/.m2/repository/org/codehaus/plexus/plexus-compiler-javac/1.5.3/plexus-compiler-javac-1.5.3.jar (14 KB at 13754.9 KB/sec)
+[INFO] Compiling 1 source file to /dati/project/testedby/mvn_plugin/target/test-embedded/test1/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.2:testResources (default-testResources) @ test1 ---
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /dati/project/testedby/mvn_plugin/target/test-embedded/test1/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.0.2:testCompile (default-testCompile) @ test1 ---
+[INFO] Compiling 1 source file to /dati/project/testedby/mvn_plugin/target/test-embedded/test1/target/test-classes
+[INFO] 
+[INFO] --- maven-sibilla-plugin:1.0-SNAPSHOT:sibilla (default) @ test1 ---
+Sep 22, 2010 5:46:36 PM it.javalinux.sibilla.plugins.scanner.RunsRepository deserialize
+INFO: Could not find /dati/project/testedby/mvn_plugin/target/test-embedded/test1/target/sibilla-runs-repository.bin, returning a new empty map.
+[ERROR] Sep 22, 2010 5:46:36 PM it.javalinux.sibilla.instrumentation.Agent premain
+[ERROR] INFO: Performing class instrumentation...
+[INFO] .I'm running a test on Foo...
+[INFO] Hello world!
+[INFO] 
+[INFO] Time: 0.002
+[INFO] 
+[INFO] OK (1 test)
+[INFO] 
+[INFO] .I'm running a test on Foo...
+[INFO] Hello world!
+[INFO] 
+[INFO] Time: 0.001
+[INFO] 
+[INFO] OK (1 test)
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 3.469s
+[INFO] Finished at: Wed Sep 22 17:46:38 CEST 2010
+[INFO] Final Memory: 13M/162M
+[INFO] ------------------------------------------------------------------------
+Running post-build script: /dati/project/testedby/mvn_plugin/target/test-embedded/test1/verify.bsh
+Sep 22, 2010 5:46:38 PM it.javalinux.sibilla.plugins.testHelpers.Test1Helper verify
+INFO: Checking for existence of sibilla metadata: /dati/project/testedby/mvn_plugin/target/test-embedded/test1/sibillaMetadata.bin
+Sep 22, 2010 5:46:38 PM it.javalinux.sibilla.plugins.testHelpers.Test1Helper verify
+INFO: Checking for existence of runs repository: /dati/project/testedby/mvn_plugin/target/test-embedded/test1/target/sibilla-runs-repository.bin
+Sep 22, 2010 5:46:38 PM it.javalinux.sibilla.plugins.testHelpers.Test1Helper verify
+INFO: /dati/project/testedby/mvn_plugin/target/test-embedded/test1/src/test/java/it/javalinux/sibilla/SampleTest.java: 1285170396729
+Sep 22, 2010 5:46:38 PM it.javalinux.sibilla.plugins.testHelpers.Test1Helper verify
+INFO: /dati/project/testedby/mvn_plugin/target/test-embedded/test1/src/main/java/it/javalinux/sibilla/Foo.java: 1285170396729
+Sep 22, 2010 5:46:38 PM it.javalinux.sibilla.plugins.testHelpers.Test1Helper verify
+INFO: startTime: 1285170393765
+Finished post-build script: /dati/project/testedby/mvn_plugin/target/test-embedded/test1/verify.bsh

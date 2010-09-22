@@ -1,0 +1,192 @@
+<plugin>
+  <description></description>
+  <groupId>it.javalinux.sibilla.plugins</groupId>
+  <artifactId>maven-sibilla-plugin</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <goalPrefix>sibilla</goalPrefix>
+  <isolatedRealm>false</isolatedRealm>
+  <inheritedByDefault>true</inheritedByDefault>
+  <mojos>
+    <mojo>
+      <goal>sibilla</goal>
+      <description>The Sibilla Maven plugin Mojo</description>
+      <requiresDependencyResolution>test</requiresDependencyResolution>
+      <requiresDirectInvocation>false</requiresDirectInvocation>
+      <requiresProject>true</requiresProject>
+      <requiresReports>false</requiresReports>
+      <aggregator>false</aggregator>
+      <requiresOnline>false</requiresOnline>
+      <inheritedByDefault>true</inheritedByDefault>
+      <phase>process-test-classes</phase>
+      <implementation>it.javalinux.sibilla.plugins.SibillaMojo</implementation>
+      <language>java</language>
+      <instantiationStrategy>per-lookup</instantiationStrategy>
+      <executionStrategy>once-per-session</executionStrategy>
+      <parameters>
+        <parameter>
+          <name>classpathElements</name>
+          <type>java.util.List</type>
+          <required>true</required>
+          <editable>false</editable>
+          <description>Project classpath.</description>
+        </parameter>
+        <parameter>
+          <name>dependencies</name>
+          <type>java.util.List</type>
+          <required>true</required>
+          <editable>false</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>excludes</name>
+          <type>java.util.Set</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>A list of exclusion filters for classesUnderTest.</description>
+        </parameter>
+        <parameter>
+          <name>includes</name>
+          <type>java.util.Set</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>A list of inclusion filters for classesUnderTest.</description>
+        </parameter>
+        <parameter>
+          <name>localRepository</name>
+          <type>org.apache.maven.artifact.repository.ArtifactRepository</type>
+          <required>true</required>
+          <editable>false</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>mavenProject</name>
+          <type>org.apache.maven.project.MavenProject</type>
+          <required>true</required>
+          <editable>false</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>outputDirectory</name>
+          <type>java.io.File</type>
+          <required>true</required>
+          <editable>true</editable>
+          <description>The compiled classes directory</description>
+        </parameter>
+        <parameter>
+          <name>pluginArtifacts</name>
+          <type>java.util.List</type>
+          <required>true</required>
+          <editable>false</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>remoteRepositories</name>
+          <type>java.util.List</type>
+          <required>true</required>
+          <editable>false</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>runnerClass</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Sets the granularity in milliseconds of the last modification
+date for testing whether a source needs has changed since last run.</description>
+        </parameter>
+        <parameter>
+          <name>sourceRoots</name>
+          <type>java.util.List</type>
+          <required>true</required>
+          <editable>false</editable>
+          <description>The source directories containing the sources</description>
+        </parameter>
+        <parameter>
+          <name>staleMillis</name>
+          <type>int</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Sets the granularity in milliseconds of the last modification
+date for testing whether a source needs has changed since last run.</description>
+        </parameter>
+        <parameter>
+          <name>targetDirectory</name>
+          <type>java.io.File</type>
+          <required>true</required>
+          <editable>true</editable>
+          <description>The target directory</description>
+        </parameter>
+        <parameter>
+          <name>testClasspathElements</name>
+          <type>java.util.List</type>
+          <required>true</required>
+          <editable>false</editable>
+          <description>Project test classpath.</description>
+        </parameter>
+        <parameter>
+          <name>testExcludes</name>
+          <type>java.util.Set</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>A list of exclusion filters for test classes.</description>
+        </parameter>
+        <parameter>
+          <name>testIncludes</name>
+          <type>java.util.Set</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>A list of inclusion filters for test classes.</description>
+        </parameter>
+        <parameter>
+          <name>testOutputDirectory</name>
+          <type>java.io.File</type>
+          <required>true</required>
+          <editable>false</editable>
+          <description>The compiled test classes directory</description>
+        </parameter>
+        <parameter>
+          <name>testSourceRoots</name>
+          <type>java.util.List</type>
+          <required>true</required>
+          <editable>false</editable>
+          <description>The source directories containing the test-source</description>
+        </parameter>
+        <parameter>
+          <name>verbose</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Set to true to for verbose logging</description>
+        </parameter>
+      </parameters>
+      <configuration>
+        <remoteRepositories implementation="java.util.List" default-value="${project.remoteArtifactRepositories}"/>
+        <sourceRoots implementation="java.util.List">${project.compileSourceRoots}</sourceRoots>
+        <testClasspathElements implementation="java.util.List">${project.testClasspathElements}</testClasspathElements>
+        <outputDirectory implementation="java.io.File">${project.build.outputDirectory}</outputDirectory>
+        <staleMillis implementation="int" default-value="0">${sibilla.lastModGranularityMs}</staleMillis>
+        <targetDirectory implementation="java.io.File">${project.build.directory}</targetDirectory>
+        <pluginArtifacts implementation="java.util.List" default-value="${plugin.artifacts}"/>
+        <runnerClass implementation="java.lang.String" default-value="it.javalinux.sibilla.runner.impl.JunitTestRunner">${sibilla.runnerClass}</runnerClass>
+        <dependencies implementation="java.util.List" default-value="${project.dependencies}"/>
+        <verbose implementation="boolean" default-value="false">${maven.compiler.verbose}</verbose>
+        <classpathElements implementation="java.util.List">${project.compileClasspathElements}</classpathElements>
+        <mavenProject implementation="org.apache.maven.project.MavenProject" default-value="${project}"/>
+        <localRepository implementation="org.apache.maven.artifact.repository.ArtifactRepository" default-value="${localRepository}"/>
+        <testSourceRoots implementation="java.util.List">${project.testCompileSourceRoots}</testSourceRoots>
+        <testOutputDirectory implementation="java.io.File">${project.build.testOutputDirectory}</testOutputDirectory>
+      </configuration>
+      <requirements>
+        <requirement>
+          <role>org.apache.maven.artifact.resolver.ArtifactResolver</role>
+          <field-name>resolver</field-name>
+        </requirement>
+        <requirement>
+          <role>org.apache.maven.artifact.factory.ArtifactFactory</role>
+          <field-name>artifactFactory</field-name>
+        </requirement>
+      </requirements>
+    </mojo>
+  </mojos>
+  <dependencies/>
+</plugin>

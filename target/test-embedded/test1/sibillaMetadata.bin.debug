@@ -1,0 +1,82 @@
+<it.javalinux.sibilla.metadata.impl.MetadataRepository>
+  <testsLinks>
+    <entry>
+      <it.javalinux.sibilla.metadata.impl.MetadataRepository_-MethodInfo>
+        <classRef>it.javalinux.sibilla.SampleTest</classRef>
+        <methodRef class="it.javalinux.sibilla.metadata.impl.ImmutableMethodMetadata">
+          <name>testFoo</name>
+          <isConstructor>false</isConstructor>
+          <parameterTypes/>
+        </methodRef>
+      </it.javalinux.sibilla.metadata.impl.MetadataRepository_-MethodInfo>
+      <set>
+        <it.javalinux.sibilla.metadata.MethodLinkMetadata>
+          <clazz>it.javalinux.sibilla.Foo</clazz>
+          <method class="it.javalinux.sibilla.metadata.impl.ImmutableMethodMetadata">
+            <name>Foo</name>
+            <isConstructor>true</isConstructor>
+            <parameterTypes/>
+          </method>
+          <status>
+            <valid>true</valid>
+            <justCreated>false</justCreated>
+            <fromAnnotation>false</fromAnnotation>
+            <fromInstrumentation>true</fromInstrumentation>
+            <passedOnLastRun>true</passedOnLastRun>
+            <creationDateInMillis>1285170397028</creationDateInMillis>
+            <onAbstract>false</onAbstract>
+          </status>
+        </it.javalinux.sibilla.metadata.MethodLinkMetadata>
+        <it.javalinux.sibilla.metadata.MethodLinkMetadata>
+          <clazz>it.javalinux.sibilla.Foo</clazz>
+          <method class="it.javalinux.sibilla.metadata.impl.ImmutableMethodMetadata">
+            <name>bar</name>
+            <isConstructor>false</isConstructor>
+            <parameterTypes/>
+          </method>
+          <status>
+            <valid>true</valid>
+            <justCreated>false</justCreated>
+            <fromAnnotation>false</fromAnnotation>
+            <fromInstrumentation>true</fromInstrumentation>
+            <passedOnLastRun>true</passedOnLastRun>
+            <creationDateInMillis>1285170397028</creationDateInMillis>
+            <onAbstract>false</onAbstract>
+          </status>
+        </it.javalinux.sibilla.metadata.MethodLinkMetadata>
+      </set>
+    </entry>
+  </testsLinks>
+  <isTestedByLinks>
+    <entry>
+      <it.javalinux.sibilla.metadata.impl.MetadataRepository_-MethodInfo>
+        <classRef>it.javalinux.sibilla.Foo</classRef>
+        <methodRef class="it.javalinux.sibilla.metadata.impl.ImmutableMethodMetadata" reference="../../../../testsLinks/entry/set/it.javalinux.sibilla.metadata.MethodLinkMetadata[2]/method"/>
+      </it.javalinux.sibilla.metadata.impl.MetadataRepository_-MethodInfo>
+      <set>
+        <it.javalinux.sibilla.metadata.MethodLinkMetadata>
+          <clazz>it.javalinux.sibilla.SampleTest</clazz>
+          <method class="it.javalinux.sibilla.metadata.impl.ImmutableMethodMetadata">
+            <name>testFoo</name>
+            <isConstructor>false</isConstructor>
+            <parameterTypes/>
+          </method>
+          <status reference="../../../../../testsLinks/entry/set/it.javalinux.sibilla.metadata.MethodLinkMetadata[2]/status"/>
+        </it.javalinux.sibilla.metadata.MethodLinkMetadata>
+      </set>
+    </entry>
+    <entry>
+      <it.javalinux.sibilla.metadata.impl.MetadataRepository_-MethodInfo>
+        <classRef>it.javalinux.sibilla.Foo</classRef>
+        <methodRef class="it.javalinux.sibilla.metadata.impl.ImmutableMethodMetadata" reference="../../../../testsLinks/entry/set/it.javalinux.sibilla.metadata.MethodLinkMetadata/method"/>
+      </it.javalinux.sibilla.metadata.impl.MetadataRepository_-MethodInfo>
+      <set>
+        <it.javalinux.sibilla.metadata.MethodLinkMetadata>
+          <clazz>it.javalinux.sibilla.SampleTest</clazz>
+          <method class="it.javalinux.sibilla.metadata.impl.ImmutableMethodMetadata" reference="../../../../../testsLinks/entry/it.javalinux.sibilla.metadata.impl.MetadataRepository$MethodInfo/methodRef"/>
+          <status reference="../../../../../testsLinks/entry/set/it.javalinux.sibilla.metadata.MethodLinkMetadata/status"/>
+        </it.javalinux.sibilla.metadata.MethodLinkMetadata>
+      </set>
+    </entry>
+  </isTestedByLinks>
+</it.javalinux.sibilla.metadata.impl.MetadataRepository>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+  <profiles>
+    <profile>
+      <id>test-embedded-repo</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <!-- This property allows the embedded tests to access the real local repository instead of the isolated one -->
+        <invoker.repo.local>@localRepository@</invoker.repo.local>
+      </properties>
+      <repositories>
+        <repository>
+          <id>local.central</id>
+          <url>@localRepositoryUrl@</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+        </repository>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <id>local.central</id>
+          <url>@localRepositoryUrl@</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+  </profiles>
+</settings>
