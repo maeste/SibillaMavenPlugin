@@ -1,7 +1,0 @@
-import java.io.*;
-import it.javalinux.sibilla.plugins.testHelpers.*;
-import java.util.*;
-import java.util.regex.*;
-
-Test1Helper helper = new Test1Helper();
-helper.setup(basedir, localRepositoryPath, context);
