@@ -272,7 +272,7 @@ public class SibillaMojo extends AbstractMojo {
 	    }
 	    
 	    // serializing configuration to temp file
-	    File confFile = File.createTempFile("TestedyBy-maven-plugin-", ".config");
+	    File confFile = File.createTempFile("sibilla-maven-plugin-", ".config");
 	    config.save(confFile);
 	    printDebugLogs(getLog(), config);
 	    
@@ -326,13 +326,12 @@ public class SibillaMojo extends AbstractMojo {
     private int invokeExecutor(String command, String[] arguments) throws Exception {
 	Commandline cl = new Commandline(command);
 	cl.addArguments(arguments);
-	int returnValue;
 	MavenLogStreamConsumer output = new MavenLogStreamConsumer(getLog(), Type.OUTPUT);
 	MavenLogStreamConsumer error = new MavenLogStreamConsumer(getLog(), Type.ERROR);
 	if (getLog().isDebugEnabled()) {
 	    getLog().debug("Command line: " + cl);
 	}
-	returnValue = CommandLineUtils.executeCommandLine(cl, output, error);
+	int returnValue = CommandLineUtils.executeCommandLine(cl, output, error);
 	return returnValue;
     }
     
