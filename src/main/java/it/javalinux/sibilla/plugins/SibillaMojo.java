@@ -245,6 +245,9 @@ public class SibillaMojo extends AbstractMojo {
      * @see org.apache.maven.plugin.AbstractMojo#execute()
      */
     public void execute() throws MojoExecutionException {
+	if ("pom".equalsIgnoreCase(mavenProject.getPackaging())) {
+	    return;
+	}
 	Long time = System.currentTimeMillis();
 	RunsRepository repository = new RunsRepository(getTargetDirectory());
 	repository.load();
