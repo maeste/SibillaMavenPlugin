@@ -58,12 +58,8 @@ public class Executor {
 	try {
 	    Configuration config = Configuration.load(new File(args[0]));
 	    TestRunner runner = getRunnerInstance(config.getRunner());
-	    MetadataSerializer serializer = getSerializerInstance(config.getSerializer());
-	    if (serializer != null) {
-		runner.run(getClassDefitions(config.getChangedClassesUnderTest()), getClassDefitions(config.getChangedTestClasses()), serializer);
-	    } else {
-		runner.run(getClassDefitions(config.getChangedClassesUnderTest()), getClassDefitions(config.getChangedTestClasses()));
-	    }
+	    MetadataSerializer serializer = getSerializerInstance(config.getSerializer(), config.getTargetDir());
+	    runner.run(getClassDefitions(config.getChangedClassesUnderTest()), getClassDefitions(config.getChangedTestClasses()), serializer);
 	} catch (Throwable t) {
 	    t.printStackTrace(output);
 	    throw new RuntimeException(t);
@@ -77,9 +73,9 @@ public class Executor {
     }
     
     @SuppressWarnings("unchecked")
-    private static MetadataSerializer getSerializerInstance(String clazz) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+    private static MetadataSerializer getSerializerInstance(String clazz, String targetDir) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
 	if (clazz == null) {
-	    return null;
+	    return new CustomMetadataSerializer(new File(targetDir, "sibilla-metadata").getPath());
 	}
 	Class<MetadataSerializer> serializerClass = (Class<MetadataSerializer>) Class.forName(clazz);
 	return serializerClass.newInstance();

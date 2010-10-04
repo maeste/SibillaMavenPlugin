@@ -65,13 +65,13 @@ public class Test1Helper implements VerifyScriptHelper, SetupScriptHelper {
      */
     public boolean verify(File basedir, File localRepositoryPath, Map<?, ?> context) throws Exception {
 	// make sure the Sibilla plugin was indeed run and the build didn't fail somewhere else
-	File sibillaMetadata = new File(basedir, "sibillaMetadata.bin");
+	File sibillaMetadata = new File(basedir, "target" + File.separator + "sibilla-metadata");
 	log.info("Checking for existence of sibilla metadata: " + sibillaMetadata);
 	if (!sibillaMetadata.exists()) {
 	    log.severe("FAILED!");
 	    return false;
 	}
-	File runsRepository = new File(basedir, "target/sibilla-runs-repository.bin");
+	File runsRepository = new File(basedir, "target" + File.separator + "sibilla-runs-repository.bin");
 	log.info("Checking for existence of runs repository: " + runsRepository);
 	if (!runsRepository.exists()) {
 	    log.severe("FAILED!");

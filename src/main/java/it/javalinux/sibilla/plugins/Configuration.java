@@ -45,7 +45,20 @@ public class Configuration implements Serializable {
     private List<File> changedClassesUnderTest = new LinkedList<File>();
     private List<File> changedTestClasses = new LinkedList<File>();
     private String serializer;
+    private String targetDir;
     
+    /**
+     * @return targetDir
+     */
+    public String getTargetDir() {
+        return targetDir;
+    }
+    /**
+     * @param targetDir Sets targetDir to the specified value.
+     */
+    public void setTargetDir(String targetDir) {
+        this.targetDir = targetDir;
+    }
     /**
      * @return runner
      */

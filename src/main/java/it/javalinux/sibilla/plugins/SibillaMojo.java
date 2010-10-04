@@ -256,6 +256,7 @@ public class SibillaMojo extends AbstractMojo {
 	    // creating configuration...
 	    Configuration config = new Configuration();
 	    config.setRunner(getRunnerClass());
+	    config.setTargetDir(getTargetDirectory().getPath());
 	    
 	    // use scanners to first get changed sources and then retrieve the corresponding targets (internally uses the mappings)
 	    SibillaSourceScanner classesUnderTestScanner = getSourceInclusionScanner(repository, getStaleMillis());
