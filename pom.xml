@@ -18,6 +18,16 @@
     <url>git://github.com/maeste/SibillaMavenPlugin.git</url>
     <connection>http://github.com/maeste/SibillaMavenPlugin</connection>
   </scm>
+  <developers>
+    <developer>
+      <name>Alessio Soldano</name>
+      <email>alessio.soldano@javalinux.it</email>
+    </developer>
+    <developer>
+      <name>Stefano Maestri</name>
+      <email>stefano.maestri@javalinux.it</email>
+    </developer>
+  </developers>
   <distributionManagement>
     <repository>
       <id>sonatype-nexus-staging</id>
